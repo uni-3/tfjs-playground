@@ -4,6 +4,7 @@ import * as tf from '@tensorflow/tfjs'
 import {generateData} from './Polynomial/data'
 
 import PolynomialChart from './Polynomial/PolynomialChart'
+import LossChart from './LossChart/LossChart'
 
 
 class PolynomialPage extends Component {
@@ -25,7 +26,7 @@ class PolynomialPage extends Component {
     const epochs = this.state.epochs
     // init plot data
     const trueCoefficients = {
-      a: -.9, b: -.2, c: .9, d: .5
+      a: -.8, b: -.2, c: .9, d: .5
     }
     const trainingData = generateData(epochs, trueCoefficients)
 
@@ -173,6 +174,7 @@ class PolynomialPage extends Component {
 
   render() {
     let dataArray = this.state.dataArray.length ? this.state.dataArray : [[0,0]]
+    let lossArray = this.state.lossArray.length ? this.state.lossArray : [[0,0]]
     let trueCoeff = this.state.trueCoeff
     let randCoeff = this.state.randCoeff
     let learnedCoeff = this.state.learnedCoeff
@@ -187,6 +189,7 @@ class PolynomialPage extends Component {
           <button id="trainButton" onClick={this.predictOutput}>Train</button>
         </div>
         <PolynomialChart dataArray={dataArray} />
+        <LossChart lossArray={lossArray} epochs={this.state.epochs} />
       </div>
     );
     //<button id="resetButton" onClick={this.resetModel}>Reset</button>
