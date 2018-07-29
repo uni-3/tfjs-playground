@@ -1,0 +1,126 @@
+
+@mixin content-padding($vertial: 8px, $horizontal: 0px) {
+  padding: $vertial $horizontal;
+}
+
+// flexbox
+@mixin flexbox() {
+  display: -webkit-box; // old
+  display: -moz-box; // old
+  display: -ms-flexbox; // ie
+  display: -webkit-flex; // new
+  display: flex; // new
+}
+
+.AndGate-img {
+  height: 80px;
+  width: 240px;
+  display: block;
+  margin: auto;
+}
+
+.AndGate-form {
+  @include flexbox();
+  flex-direction: column;
+  /*
+  margin-left: 30%;
+  margin-right:30%;
+  */
+  margin: auto;
+  font-size: 16px;
+  width: 70%;
+}
+
+.AndGate-form h2 {
+  text-align: center;
+}
+
+.AndGate-input {
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+}
+
+.AndGate-input label, .AndGate-predict label {
+  @include content-padding();
+  border: none;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: inherit;
+  margin-right: 10px;
+  width: 10%;
+}
+
+.AndGate-input select, input {
+  /*
+  justify-content: center;
+  flex-grow: 2;
+  text-align: left;
+  margin-right: 10px;
+  */
+  padding: .7em 1.5em;
+  text-decoration: none;
+  display: inline-block;
+  font-size: inherit;
+  width: max-content;
+}
+
+.AndGate-buttons {
+  @include content-padding();
+  display: flex;
+  //justify-content: flex-end;
+}
+
+.AndGate-buttons button {
+  @include content-padding($horizontal: 8px);
+}
+
+.AndGate-buttons #predictButton {
+  background-color: #ff6347;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: inherit;
+  width: max-content;
+  cursor: pointer;
+}
+
+.AndGate-buttons #trainButton {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: inherit;
+  margin-right: 10px;
+  width: max-content;
+  cursor: pointer;
+}
+
+.AndGate-buttons #resetButton {
+  background-color: rgb(235, 74, 74);
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: inherit;
+  margin-right: 10px;
+  width: max-content;
+  cursor: pointer;
+}
+
+.AndGate-buttons #trainButton:active {
+  background-color: rgb(46, 143, 49);
+  cursor: progress;
+}
+
+.AndGate-buttons #resetButton:active {
+  background-color: rgb(221, 38, 38);
+  cursor: progress;
+}
+
+.AndGate-buttons button:hover {
+  box-shadow: 3px 3px rgb(215, 216, 231);
+}
