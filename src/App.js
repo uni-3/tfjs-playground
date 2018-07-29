@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 import Logo from "./assets/logo.png"
 import "./App.css"
 import AndGatePage from "./components/AndGatePage"
+import PolynomialPage from "./components/PolynomialPage"
 
 class App extends Component {
   render() {
@@ -20,9 +21,13 @@ class App extends Component {
             <li>
               <Link to="/andgate">andgate</Link>
             </li>
+            <li>
+              <Link to="/polynomial">polynomial</Link>
+            </li>
           </ul>
           <Route exact path="/" />
           <Route exact path="/andgate" component={AndGatePage} />
+          <Route exact path="/polynomial" component={PolynomialPage} />
         </div>
       </Router>
     );

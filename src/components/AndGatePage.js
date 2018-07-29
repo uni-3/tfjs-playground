@@ -7,14 +7,18 @@ import LossChart from './LossChart/LossChart'
 import './AndGatePage.css';
 
 class AndGatePage extends Component {
-  state = {
-    firstInput: 1,
-    secondInput: 1,
-    epochs: 1000,
-    learningRate: 0.05,
-    predictedOutput: '',
-    lossArray: [],
-    weightModel: tf.variable(tf.randomNormal([3, 1], 0, 0.1, 'float32', 12))
+  constructor(props) {
+    super(props)
+    this.initState = {
+      firstInput: 1,
+      secondInput: 1,
+      epochs: 1000,
+      learningRate: 0.05,
+      predictedOutput: '',
+      lossArray: [],
+      weightModel: tf.variable(tf.randomNormal([3, 1], 0, 0.1, 'float32', 12))
+    }
+    this.state = this.initState
   }
 
   predictOutput = (event) => {
@@ -98,15 +102,7 @@ class AndGatePage extends Component {
 
   resetModel = (event) => {
     event.preventDefault()
-    this.setState({
-      firstInput: 1,
-      secondInput: 1,
-      epochs: 1000,
-      learningRate: 0.05,
-      predictedOutput: '',
-      lossArray: [],
-      weightModel: tf.variable(tf.randomNormal([3, 1], 0, 0.1, 'float32', 12))
-    })
+    this.setState(this.initState)
   }
 
   render() {
