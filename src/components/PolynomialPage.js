@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
 import * as tf from '@tensorflow/tfjs'
 
+import 'katex/dist/katex.min.css';
+import { InlineMath, BlockMath } from 'react-katex';
+
+import { TextField, Button } from "@material-ui/core";
+
 import {generateData} from './Polynomial/data'
 
 import PolynomialChart from './Polynomial/PolynomialChart'
 import LossChart from './LossChart/LossChart'
 
+import './PolynomialPage.css';
 
 class PolynomialPage extends Component {
   constructor(props) {
@@ -13,7 +19,9 @@ class PolynomialPage extends Component {
     this.initState = {
       epochs: 500,
       learningRate: 0.5,
-      trueCoeff: {},
+      trueCoeff: {
+        a: -.8, b: -.2, c: .9, d: .5
+      },
       randCoeff: {},
       learnedCoeff: {},
       dataArray: [],
@@ -24,22 +32,30 @@ class PolynomialPage extends Component {
 
   componentDidMount () {
     const epochs = this.state.epochs
-    // init plot data
-    const trueCoefficients = {
-      a: -.8, b: -.2, c: .9, d: .5
-    }
-    const trainingData = generateData(epochs, trueCoefficients)
+    const coeff = this.state.trueCoeff
+
+    const trainingData = generateData(epochs, coeff)
 
     const x = trainingData.xs.dataSync()
     const y = trainingData.ys.dataSync()
+    const data = [x, y]
 
-    let dataArray = [['x', 'y_data']]
-    for (let i in x) {
-      dataArray.push([x[i], y[i]])
+    this.plotData(data, ['x', 'y_data'])
+  }
+
+  plotData(data, header=['x', 'y_data']) {
+    // [[1,2,3], [4,5,6]]
+    // [[1,4],[2,5],[3,6]]
+    let dataArray = [header]
+    for (let column in data[0]) {
+      let value = []
+      for (let row in data) {
+        value.push(data[row][column])
+      }
+      dataArray.push(value)
     }
 
     this.setState({
-      trueCoeff: trueCoefficients, 
       dataArray: dataArray
     })
   }
@@ -48,20 +64,18 @@ class PolynomialPage extends Component {
     event.preventDefault()
 
     const epochs = this.state.epochs
+    const trueCoeff = this.state.trueCoeff
     const learningRate = this.state.learningRate
-    const trueCoefficients = {
-      a: -.8, b: -.2, c: .9, d: .5
-    }
-    const trainingData = generateData(epochs, trueCoefficients)
+    const trainingData = generateData(epochs, trueCoeff)
 
 
     // Step 1. Set up variables, these are the things we want the model
     // to learn in order to do prediction accurately. We will initialize
     // them with random values.
-    const a = tf.variable(tf.scalar(Math.random()));
-    const b = tf.variable(tf.scalar(Math.random()));
-    const c = tf.variable(tf.scalar(Math.random()));
-    const d = tf.variable(tf.scalar(Math.random()));
+    const a = tf.variable(tf.scalar(Math.random()))
+    const b = tf.variable(tf.scalar(Math.random()))
+    const c = tf.variable(tf.scalar(Math.random()))
+    const d = tf.variable(tf.scalar(Math.random()))
 
     // generate random value
     const xs = trainingData.xs
@@ -70,6 +84,7 @@ class PolynomialPage extends Component {
     // plot data
     const x = trainingData.xs.dataSync()
     const y_true = trainingData.ys.dataSync()
+
 
     const f = (x) => {
       return tf.tidy(() => {
@@ -119,27 +134,29 @@ class PolynomialPage extends Component {
 
       let predictions = f(trainingData.xs)
       let y_pred = predictions.dataSync()
-      let dataArray = [['x', 'y_true', 'y_rand', 'y_pred']]
-      for (let i in x) {
-        dataArray.push([x[i], y_true[i], y_rand[i], y_pred[i]])
-      }
+      let header = ['x', 'y_true', 'y_rand', 'y_pred']
 
-      this.setState({
-        dataArray: dataArray
-      })
+      let data = [x, y_true, y_rand, y_pred]
+      this.plotData(data, header)
 
     }
 
   }
 
   formChangedHandler = (event) => {
-    if (event.target.name === 'firstInput') {
-      this.setState({ firstInput: +event.target.value})
-    } else if (event.target.name === 'secondInput') {
-      this.setState({ secondInput: +event.target.value })
-    } else if (event.target.name === 'epochs') {
+    event.preventDefault()
+    const trueCoeff = this.state.trueCoeff
+
+    Object.keys(trueCoeff).map((key, index) => {
+      if (event.target.name === key) {
+        trueCoeff[key] = Number(event.target.value)
+        this.setState({ trueCoeff: trueCoeff })
+      } 
+    })
+    if (event.target.name === 'epochs') {
       this.setState({ epochs: +event.target.value })
-    } else if (event.target.name === 'learningRate') {
+    } 
+    if (event.target.name === 'learningRate') {
       this.setState({ learningRate: +event.target.value })
     }
   }
@@ -150,25 +167,33 @@ class PolynomialPage extends Component {
     this.setState(this.initState)
   }
 
-  renderCoeff(title, coeff) {
-    if (Object.keys(coeff).length === 0) {
+  renderInput(title, obj, props={}, readOnly=false) {
+    const keys = Object.keys(obj)
+    if (keys.length === 0) {
       return
     }
+
+    const contents = keys.map((key, index) => {
+      const value = Number(obj[key]).toFixed(2)
+      return (
+        <TextField
+          key={index}
+          name={key}
+          type="number"
+          label={key}
+          value={value}
+          margin="normal"
+          inputProps={props}
+          InputProps={ {readOnly: readOnly} }
+          className="input-textfield"
+        />
+      )
+    })
     return (
-      <p>{title}
-        <span>
-          a: {coeff.a}
-        </span>
-        <span>
-          b: {coeff.b}
-        </span>
-        <span>
-          c: {coeff.c}
-        </span>
-        <span>
-          d: {coeff.d}
-        </span>
-      </p>
+      <div>
+        <span className="input-title">{title}</span>
+        {contents}
+      </div>
     )
   }
 
@@ -178,15 +203,41 @@ class PolynomialPage extends Component {
     let trueCoeff = this.state.trueCoeff
     let randCoeff = this.state.randCoeff
     let learnedCoeff = this.state.learnedCoeff
+
+    let epochsProps = {
+      step: 1,
+      max: 1000,
+      min: 0
+    }
+    let learningRateProps = {
+      step: 0.01,
+      max: 1,
+      min: 0 
+    }
+    let coeffProps = {
+      step: 0.01,
+      max: 5,
+      min: -5
+    }
     return (
       <div className="Poly">
-        <div>
-          { this.renderCoeff('true coefficients: ', trueCoeff) }
-          { this.renderCoeff('generate randomly coefficients: ', randCoeff) }
-          { this.renderCoeff('learned coefficients: ', learnedCoeff) }
+        <h2>Predict polynomial equation</h2>
+        <BlockMath>
+          f(x) = ax^3 + bx^2 + cx + d
+        </BlockMath>
+        <h3>Configure</h3>
+        <div className="Polynomial-input" onChange={this.formChangedHandler}>
+          { this.renderInput('epochs', { epochs: this.state.epochs }, epochsProps) }
+          { this.renderInput('learning rate', { learningRate: this.state.learningRate }, learningRateProps) }
+          <h3>Coefficients</h3>
+          { this.renderInput('train coefficients: ', trueCoeff, coeffProps) }
+          { this.renderInput('generate randomly coefficients: ', randCoeff, coeffProps, true) }
+          { this.renderInput('learned coefficients: ', learnedCoeff, coeffProps, true) }
         </div>
         <div className="polynomial-buttons">
-          <button id="trainButton" onClick={this.predictOutput}>Train</button>
+          <Button id="trainButton" variant="contained" color="primary" onClick={this.predictOutput}> 
+            Train
+          </Button>
         </div>
         <PolynomialChart dataArray={dataArray} />
         <LossChart lossArray={lossArray} epochs={this.state.epochs} />
