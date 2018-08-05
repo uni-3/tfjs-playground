@@ -36,7 +36,7 @@ import * as tf from '@tensorflow/tfjs';
  *
  *   - leftward or rightward force.
  */
-export class CartPole {
+export default class CartPoleData {
   /**
    * Constructor of CartPole.
    */
@@ -89,17 +89,19 @@ export class CartPole {
    *   A value <= 0 leads to a leftward force of the same fixed magnitude.
    */
   update(action) {
+    // force力の向き
     const force = action > 0 ? this.forceMag : -this.forceMag;
 
     const cosTheta = Math.cos(this.theta);
     const sinTheta = Math.sin(this.theta);
 
+    // moment = mass*length
+    // theta　係数、最適化する角度を求めたい
     const temp =
         (force + this.poleMoment * this.thetaDot * this.thetaDot * sinTheta) /
         this.totalMass;
     const thetaAcc = (this.gravity * sinTheta - cosTheta * temp) /
-        (this.length *
-         (4 / 3 - this.massPole * cosTheta * cosTheta / this.totalMass));
+        (this.length * (4 / 3 - this.massPole * cosTheta * cosTheta / this.totalMass));
     const xAcc = temp - this.poleMoment * thetaAcc * cosTheta / this.totalMass;
 
     // Update the four state variables, using Euler's metohd.

@@ -8,7 +8,7 @@ import { TextField, Button } from "@material-ui/core";
 
 import {generateData} from './Polynomial/data'
 
-import PolynomialChart from './Polynomial/PolynomialChart'
+import ScatterChart from './ScatterChart/ScatterChart'
 import LossChart from './LossChart/LossChart'
 
 import './PolynomialPage.css';
@@ -239,7 +239,7 @@ class PolynomialPage extends Component {
             Train
           </Button>
         </div>
-        <PolynomialChart dataArray={dataArray} />
+        <ScatterChart dataArray={dataArray} />
         <LossChart lossArray={lossArray} epochs={this.state.epochs} />
       </div>
     );

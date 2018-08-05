@@ -36,7 +36,7 @@
 
 import * as tf from '@tensorflow/tfjs';
 
-import {maybeRenderDuringTraining, onGameEnd, setUpUI} from './ui';
+//import {maybeRenderDuringTraining, onGameEnd, setUpUI} from './ui';
 
 /**
  * Policy network for controlling the cart-pole system.
@@ -60,9 +60,9 @@ class PolicyNetwork {
    */
   constructor(hiddenLayerSizesOrModel) {
     if (hiddenLayerSizesOrModel instanceof tf.Model) {
-      this.model = hiddenLayerSizesOrModel;
+      this.model = hiddenLayerSizesOrModel
     } else {
-      this.createModel(hiddenLayerSizesOrModel);
+      this.createModel(hiddenLayerSizesOrModel)
     }
   }
 
@@ -74,8 +74,9 @@ class PolicyNetwork {
    *   any number of hidden layers).
    */
   createModel(hiddenLayerSizes) {
-    if (!Array.isArray(hiddenLayerSizes)) {
-      hiddenLayerSizes = [hiddenLayerSizes];
+    // if input number 
+    if (!Array.isArray(hiddenLayerSizes)) { 
+      hiddenLayerSizes = [hiddenLayerSizes]
     }
     this.model = tf.sequential();
     hiddenLayerSizes.forEach((hiddenLayerSize, i) => {
@@ -112,8 +113,9 @@ class PolicyNetwork {
     const allGradients = [];
     const allRewards = [];
     const gameSteps = [];
-    onGameEnd(0, numGames);
-    for (let i = 0; i < numGames; ++i) {
+    //onGameEnd(0, numGames);
+    let i = 0
+    for (i; i < numGames; ++i) {
       // Randomly initialize the state of the cart-pole system at the beginning
       // of every game.
       cartPoleSystem.setRandomState();
@@ -132,7 +134,8 @@ class PolicyNetwork {
         const action = this.currentActions_[0];
         const isDone = cartPoleSystem.update(action);
 
-        await maybeRenderDuringTraining(cartPoleSystem);
+        // ui
+        //await maybeRenderDuringTraining(cartPoleSystem);
 
         if (isDone || j >= maxStepsPerGame) {
           if (isDone) {
@@ -140,7 +143,7 @@ class PolicyNetwork {
             // 0 is given.
             gameRewards.push(0);
           }
-          onGameEnd(i + 1, numGames);
+          //onGameEnd(i + 1, numGames);
           break;
         } else {
           // As long as the game doesn't end, each step leads to a reward of 1.
@@ -177,7 +180,7 @@ class PolicyNetwork {
           scaleAndAverageGradients(allGradients, normalizedRewards));
     });
     tf.dispose(allGradients);
-    return gameSteps;
+    return [gameSteps, i]
   }
 
   getGradientsAndSaveActions(inputTensor) {
@@ -260,13 +263,14 @@ export class SaveablePolicyNetwork extends PolicyNetwork {
    * @param {number | number[]} hiddenLayerSizesOrModel
    */
   constructor(hiddenLayerSizesOrModel) {
-    super(hiddenLayerSizesOrModel);
+    super(hiddenLayerSizesOrModel)
   }
 
   /**
    * Save the model to IndexedDB.
    */
   async saveModel() {
+    console.log('save model')
     return await this.model.save(MODEL_SAVE_PATH_);
   }
 
@@ -417,4 +421,4 @@ function scaleAndAverageGradients(allGradients, normalizedRewards) {
   });
 }
 
-setUpUI();
+//setUpUI();

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Chart } from 'react-google-charts';
 
-import './PolynomialChart.css'
+import './ScatterChart.css'
 
 
-class PolynomialChart extends Component {
+export default class ScatterChart extends Component {
   constructor(props) {
     super(props);
     this.chartEvents = [
@@ -14,7 +14,7 @@ class PolynomialChart extends Component {
          // console.log('Selected ', Chart.chart.getSelection())
         },
       },
-    ];
+    ]
     this.state = {
       options: {
         title: 'plot data and predicts',
@@ -44,7 +44,7 @@ class PolynomialChart extends Component {
           label: 'y',
         }
       ],
-    };
+    }
   }
   render() {
     return (
@@ -58,9 +58,7 @@ class PolynomialChart extends Component {
         className="Poly-chart"
         legendToggle
       />
-    );
+    )
   }
 
 }
-
-export default PolynomialChart;

@@ -109,6 +109,7 @@ class AndGatePage extends Component {
     let lossArray = this.state.lossArray.length ? this.state.lossArray : [[0,0]]
     return (
       <div className="AndGate">
+        <h2>Train&Predict Andgate</h2>
         <AndGate
           formChangedHandler={this.formChangedHandler}
           predictOutput={this.predictOutput}
