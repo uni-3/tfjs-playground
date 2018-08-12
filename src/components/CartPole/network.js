@@ -270,7 +270,6 @@ export class SaveablePolicyNetwork extends PolicyNetwork {
    * Save the model to IndexedDB.
    */
   async saveModel() {
-    console.log('save model')
     return await this.model.save(MODEL_SAVE_PATH_);
   }
 

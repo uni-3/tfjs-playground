@@ -1,5 +1,7 @@
 import React from 'react'
 
+import NetworkD3 from '../NetworkD3/NetworkD3'
+
 export default class Counter extends React.Component {
   render() {
     const { increment, decrement, counter } = this.props
@@ -11,6 +13,7 @@ export default class Counter extends React.Component {
         <div>
           Count: {counter.count}
         </div>
+        <NetworkD3 />
       </div>
     )
   }

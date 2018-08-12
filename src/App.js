@@ -1,17 +1,10 @@
 import React, { Component } from "react"
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom"
+import { BrowserRouter as Router } from "react-router-dom"
 
-import Logo from "./assets/logo.png"
+import Routes from './Routes'
+import Header from './Header'
+
 import "./App.css"
-
-import Counter from "./containers/Counter"
-
-import AndGatePage from "./components/AndGatePage"
-import PolynomialPage from "./components/PolynomialPage"
-import CartPolePage from "./components/CartPolePage"
-
-import {Tab, Tabs} from '@material-ui/core'
-
 
 class App extends Component {
   constructor(props) {
@@ -21,7 +14,7 @@ class App extends Component {
         andgate: '/andgate',
         polynomial: '/polynomial',
         cartpole: '/cartpole'
-      }
+    }
     this.initState = {
       paths: paths,
       tabValue: 0,
@@ -57,30 +50,12 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <header className="App-header">
-            <img src={Logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">tfjs playground</h1>
-          </header>
-          <Tabs value={this.state.tabValue} onChange={this.onTabChange}>
-            {
-              Object.keys(this.state.paths).map((key, index) => {
-                return (
-                  <Tab 
-                    key={key} 
-                    label={key}
-                    component={Link} 
-                    to={this.state.paths[key]}
-                  />
-                )
-              })
-            }
-          </Tabs>
-          <Switch>
-            <Route exact path="/" component={Counter}/>
-            <Route exact path="/andgate" component={AndGatePage} />
-            <Route exact path="/polynomial" component={PolynomialPage} />
-          <  Route exact path="/cartpole" component={CartPolePage} />
-          </Switch>
+          <Header
+            onTabChange={this.onTabChange}
+            tabValue={this.state.tabValue}
+            paths={this.state.paths}
+          />
+          <Routes />
         </div>
       </Router>
     );

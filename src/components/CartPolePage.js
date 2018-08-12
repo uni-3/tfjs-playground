@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import * as ReactDOM from 'react-dom'
 import * as tf from '@tensorflow/tfjs'
 
 import ScatterChart from './ScatterChart/ScatterChart'
@@ -252,7 +251,7 @@ onGameEnd(gameCount, totalGames) {
       const inputs = this.state.inputValues
       const hiddenLayerSizes =
         inputs.hiddenLayersSizes.toString().split(',').map(v => {
-          const num = Number.parseInt(v.trim())
+          const num = v.trim()
           if (!(num > 0)) {
             throw new Error(
               `Invalid hidden layer sizes string: ` +
@@ -289,16 +288,16 @@ onGameEnd(gameCount, totalGames) {
       const inputs = this.state.inputValues
 
       try {
-        const trainIterations = Number.parseInt(inputs.numIterations)
+        const trainIterations = inputs.numIterations
         if (!(trainIterations > 0)) {
           throw new Error(`Invalid n umber of iterations: ${trainIterations}`)
         }
-        const gamesPerIteration = Number.parseInt(inputs.gamesPerIteration)
+        const gamesPerIteration = inputs.gamesPerIteration
         if (!(gamesPerIteration > 0)) {
           throw new Error(
             `Invalid # of games per iterations: ${gamesPerIteration}`)
         }
-        const maxStepsPerGame = Number.parseInt(inputs.maxStepsPerGame)
+        const maxStepsPerGame = inputs.maxStepsPerGame
         if (!(maxStepsPerGame > 1)) {
           throw new Error(`Invalid max. steps per game: ${maxStepsPerGame}`);
         }
@@ -460,14 +459,11 @@ onGameEnd(gameCount, totalGames) {
           buttons={this.state.buttons}
           progress={this.state.progress}
           changeInputs={this.changeInputs}
-
           appStatus={this.state.appStatus}
-
           clickTrain={this.clickTrain.bind(this)}
           clickTest={this.clickTest.bind(this)}
           clickCreateModel={this.clickCreateModel.bind(this)}
           clickDeleteStoredModel={this.clickDeleteStoredModel.bind(this)}
-
         />
         <div className="canvases" id="steps-canvas"></div>
         <div>

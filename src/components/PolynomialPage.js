@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import * as tf from '@tensorflow/tfjs'
 
 import 'katex/dist/katex.min.css';
-import { InlineMath, BlockMath } from 'react-katex';
+import { BlockMath } from 'react-katex';
 
 import { TextField, Button } from "@material-ui/core";
 
@@ -172,6 +172,7 @@ class PolynomialPage extends Component {
     if (keys.length === 0) {
       return
     }
+    props.readOnly = readOnly
 
     const contents = keys.map((key, index) => {
       const value = Number(obj[key]).toFixed(2)
@@ -184,7 +185,6 @@ class PolynomialPage extends Component {
           value={value}
           margin="normal"
           inputProps={props}
-          InputProps={ {readOnly: readOnly} }
           className="input-textfield"
         />
       )
