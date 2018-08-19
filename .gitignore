@@ -21,3 +21,5 @@ npm-debug.log*
 sftp-config.json
 
 __MACOSX/
+
+.env

@@ -4,7 +4,7 @@ import * as tf from '@tensorflow/tfjs'
 import 'katex/dist/katex.min.css';
 import { BlockMath } from 'react-katex';
 
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core"
 
 import {generateData} from './Polynomial/data'
 

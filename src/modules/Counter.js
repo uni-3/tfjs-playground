@@ -3,11 +3,11 @@ const INCREMENT = 'COUNTER_INCREMENT'
 const DECREMENT = 'COUNTER_DECREMENT'
 
 const initialState = {
-  count: 0
+  count: 5
 }
 
 // reducer
-export default function reducer(state=initialState, action) {
+export default function counter(state=initialState, action) {
   switch (action.type) {
     case INCREMENT:
       return {

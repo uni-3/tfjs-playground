@@ -6,20 +6,20 @@ import './ScatterChart.css'
 
 export default class ScatterChart extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.chartEvents = [
       {
         eventName: 'select',
         callback(Chart) {
-         // console.log('Selected ', Chart.chart.getSelection())
+          console.log('Selected ', Chart)
         },
       },
     ]
     this.state = {
       options: {
-        title: 'plot data and predicts',
+        title: 'plot data',
         hAxis: { title: 'x', minValue: -1, maxValue: 1 },
-        vAxis: { title: 'y', minValue: 0, maxValue: 1 },
+        vAxis: { title: 'y', minValue: -1, maxValue: 1 },
         legend: { position: "bottom" },
         explorer: {
           actions: ['dragToZoom', 'rightClickToReset'],

@@ -11,9 +11,9 @@ class App extends Component {
     super(props)
     const paths = {
         home: '/',
+        bookapi: '/bookapi',
         andgate: '/andgate',
-        polynomial: '/polynomial',
-        cartpole: '/cartpole'
+        polynomial: '/polynomial'
     }
     this.initState = {
       paths: paths,
