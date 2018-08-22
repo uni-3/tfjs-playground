@@ -2,12 +2,16 @@
 const SEARCH_REQUESTED = 'SEARCH_REQUESTED'
 const SEARCH_SUCCEEDED = 'SEARCH_SUCCEEDED'
 const SET_FORM = 'SET_FORM'
+const SET_PAGE = 'SET_PAGE'
+const SET_ORDER= 'SET_OEDER'
 
 const initialState = {
   author: '夏目漱石',
   title: '',
   page: 1,
   loading: false,
+  order: 'asc',
+  orderBy: 'title',
   res: {}
 }
 
@@ -15,20 +19,39 @@ const initialState = {
 export default function libraryApi(state=initialState, action) {
   switch (action.type) {
     case SEARCH_REQUESTED:
+      console.log('search req', action.payload)
       return {
         ...state,
+        ...action.payload,
         loading: true
       }
+
     case SEARCH_SUCCEEDED:
       return {
         ...state,
         loading: false,
         res: action.res
       }
+
     case SET_FORM:
       /*
         action.payload = { key: value}
       */
+      return {
+        ...state,
+        ...action.payload
+      }
+
+    case SET_PAGE:
+      /*
+        action.payload = { page: value}
+      */
+      return {
+        ...state,
+        ...action.payload
+      }
+
+    case SET_ORDER:
       return {
         ...state,
         ...action.payload
@@ -39,9 +62,19 @@ export default function libraryApi(state=initialState, action) {
 }
 
 // action-creator
+// clicked search button
 export function onSearch(e) {
-  console.log('action search', e)
   e.preventDefault()
+  return { 
+    type: SEARCH_REQUESTED,
+    payload: {
+      page: 1
+    }
+  }
+}
+
+// changed page
+export function search() {
   return { 
     type: SEARCH_REQUESTED,
   }
@@ -61,5 +94,33 @@ export function changedForm(e) {
   return { 
     type: SET_FORM,
     payload: payload
+  }
+}
+
+export function onChangePage(e, page) {
+  console.log('onchangepage', page)
+  if (page === undefined) {
+    page = 1
+  }
+  return {
+    type: SET_PAGE,
+    payload: {
+      page: page
+    }
+  }
+}
+
+export function createSortHandler(orderBy, order) {
+  if (order === 'desc') {
+    order = 'asc'
+  } else {
+    order = 'desc'
+  }
+  return {
+    type: SET_ORDER,
+    payload: {
+      orderBy: orderBy,
+      order: order
+    }
   }
 }

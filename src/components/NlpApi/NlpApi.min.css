@@ -1,0 +1,1 @@
+.nlp-api{display:flex;flex-wrap:wrap;justify-content:space-around}.nlp-api h2,.nlp-api .input-field .input-text{width:100%}.nlp-api .input-field .input-text>div,.nlp-api .result .output-text>div{border:solid 1px gray}.nlp-api .input-field .input-text>div::before,.nlp-api .result .output-text>div::before{border-bottom:none}

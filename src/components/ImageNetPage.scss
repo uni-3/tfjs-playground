@@ -1,0 +1,36 @@
+.imagenet {
+  padding: 0 1%;
+  .table {
+    min-width: 500px;
+    max-width: 600px;
+  }
+  .disable {
+    pointer-events: none;
+  }
+  img {
+    width: 300px;
+    height: 100%;
+   // margin-right: 2%;
+  }
+
+  .sample-images, .upload-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+  }
+  .dropzone {
+    //position: relative;
+    width: 300px;
+    height: 200px;
+    box-sizing: border-box;
+    border-width: 2px;
+    border-color: rgb(102, 102, 102);
+    border-style: dashed;
+    border-radius: 5px;
+    //display: inline-block;
+    vertical-align: top;
+    margin-right: 2%;
+  }
+  .uploadimg {}
+}

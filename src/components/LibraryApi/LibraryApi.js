@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import { Button, TextField } from "@material-ui/core"
-import { Table, TableBody, TableHead, TableRow, TableCell } from "@material-ui/core"
+import { Table, TableBody, TableHead, TableSortLabel, TableRow, TableCell, TablePagination, TableFooter } from "@material-ui/core"
 import { Tooltip } from "@material-ui/core"
 
 export default class LibraryApi extends Component {
@@ -9,8 +9,18 @@ export default class LibraryApi extends Component {
     super(props)
   }
 
-  /*
-  renderTableHead() {
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.libraryApi.page === 0) {
+      return
+    }
+    // if change page(not 0), search
+    if (nextProps.libraryApi.page !== this.props.libraryApi.page) {
+      this.props.search()
+    }
+  }
+
+  renderTableHeader() {
+    console.log('head', this)
     const rows = [
       { id: 'title', numeric: false, disablePadding: true, label: 'タイトル' },
       { id: 'author', numeric: false, disablePadding: false, label: '著者' },
@@ -19,50 +29,85 @@ export default class LibraryApi extends Component {
       { id: 'size', numeric: false, disablePadding: false, label: 'サイズ' },
       { id: 'url', numeric: false, disablePadding: false, label: 'リンク' },
     ]
-      return (
-        <TableHead>
-          <TableRow>
-            {rows.map(row => {
-              return (
-                <TableCell
-                  key={row.id}
-                  numeric={row.numeric}
-                  padding={row.disablePadding ? 'none' : 'default'}
-                  sortDirection={orderBy === row.id ? order : false}
+    const { order, orderBy } = this.props.libraryApi
+    return (
+      <TableHead>
+        <TableRow>
+          {rows.map(row => {
+            return (
+              <TableCell
+                key={row.id}
+                numeric={row.numeric}
+                padding={row.disablePadding ? 'none' : 'default'}
+                sortDirection={orderBy === row.id ? order : false}
+              >
+                <Tooltip
+                  title="Sort"
+                  placement={row.numeric ? 'bottom-end' : 'bottom-start'}
+                  enterDelay={300}
                 >
-                  <Tooltip
-                    title="Sort"
-                    placement={row.numeric ? 'bottom-end' : 'bottom-start'}
-                    enterDelay={300}
+                  <TableSortLabel
+                    active={orderBy === row.id}
+                    direction={order}
+                    onClick={() => {this.props.createSortHandler(row.id, order)}}
                   >
-                    <TableSortLabel
-                      active={orderBy === row.id}
-                      direction={order}
-                      onClick={this.createSortHandler(row.id)}
-                    >
-                      {row.label}
-                    </TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-              )
-            }, this)}
-          </TableRow>
-        </TableHead>
+                    {row.label}
+                  </TableSortLabel>
+                </Tooltip>
+              </TableCell>
+            )
+          }, this)}
+        </TableRow>
+      </TableHead>
       )
   }
-  */
 
-  renderResTable(res) {
+  renderTableFooter(res) {
+    let props = this.props.libraryApi
+
+    return (
+      <TableFooter>
+        <TableRow>
+          <TablePagination
+            rowsPerPage={30}
+            page={props.page}
+            count={res.count}
+            onChangePage={this.props.onChangePage}
+            rowsPerPageOptions={[]} // not display perpage select field
+          >
+          </TablePagination>
+        </TableRow>
+      </TableFooter>
+    )
+  }
+
+
+  renderTable(res) {
     if (Object.keys(res).length === 0) {
       return
+    }
+
+    let {order, orderBy} = this.props.libraryApi
+    let desc = (a, b, orderBy) => {
+      if (b[orderBy] < a[orderBy]) {
+        return -1
+      }
+      if (b[orderBy] > a[orderBy]) {
+        return 1
+      }
+      return 0
+    }
+
+    let getSorting = (order, orderBy) => {
+      console.log('sort', order, orderBy)
+      return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy)
     }
 
     const resJson = JSON.parse(res)
     const count = resJson.count
     const items = resJson.Items
-    const listItems = items.map((value, index) => {
+    const listItems = items.sort(getSorting(order, orderBy)).map((value, index) => {
       const item = value.Item
-
       return (
         <TableRow
           key={index}
@@ -90,19 +135,19 @@ export default class LibraryApi extends Component {
     })
 
     return (
-
       <div> 
         hits: {count}
         <Table>
+          {this.renderTableHeader()}
           <TableBody>
             {listItems}
           </TableBody>
+          {this.renderTableFooter(resJson)}
         </Table>
       </div>
-
     )
-
   }
+
 
   render() {
     console.log('library this props', this.props)
@@ -117,7 +162,7 @@ export default class LibraryApi extends Component {
           <TextField name="author" label="Author" value={author} onChange={changedForm} />
           <Button type="submit" variant="outlined" color="primary">search</Button>
         </form>
-        { this.renderResTable(res) }
+        { this.renderTable(res) }
       </div>
     )
   }

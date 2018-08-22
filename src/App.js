@@ -12,6 +12,8 @@ class App extends Component {
     const paths = {
         home: '/',
         bookapi: '/bookapi',
+        nlpapi: '/nlpapi',
+        imagenet: '/imagenet',
         andgate: '/andgate',
         polynomial: '/polynomial'
     }

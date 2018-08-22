@@ -13,8 +13,11 @@ const mapDispatchToProps = dispatch => {
   const modules = libraryApiModule
   return {
     onSearch: (e) => dispatch(modules.onSearch(e)),
+    search: () => dispatch(modules.search()),
     fetch: () => dispatch(modules.fetch()),
-    changedForm: (e) => dispatch(modules.changedForm(e))
+    createSortHandler: (orderBy, order) => dispatch(modules.createSortHandler(orderBy, order)),
+    changedForm: (e) => dispatch(modules.changedForm(e)),
+    onChangePage: (e, page) => dispatch(modules.onChangePage(e, page))
   }
 }
 

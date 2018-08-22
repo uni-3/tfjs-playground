@@ -1,5 +1,5 @@
 import { select, call, put, takeEvery, takeLatest } from 'redux-saga/effects'
-import { postSearch } from './api'
+import { postBookApi } from './api'
 
 
 // selector 
@@ -19,7 +19,7 @@ function* fetchResult(action) {
     console.log('saga this', this)
     const stateFormValue = yield select(getFormValue)
     console.log('sage state', stateFormValue)
-    const res = yield call(postSearch, stateFormValue)
+    const res = yield call(postBookApi, stateFormValue)
     console.log('saga res', res)
     yield put({type: "SEARCH_SUCCEEDED", res: res})
   } catch (e) {
@@ -30,7 +30,7 @@ function* fetchResult(action) {
 /*
   run fetchResult post each SEARCH_REQUESTED Action
 */
-function* runTakeEvery() {
+function* runSearchEvery() {
   yield takeEvery("SEARCH_REQUESTED", fetchResult)
 }
 
@@ -44,5 +44,11 @@ function* runTaleLatest() {
   yield takeLatest("USER_FETCH_REQUESTED", fetchResult)
 }
 
-export default runTakeEvery
+/*
+export default {
+  runSearchEvery: runSearchEvery,
+  runTakeEvery: runTakeEvery
+}
+*/
 
+export default runSearchEvery

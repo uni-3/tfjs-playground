@@ -1,0 +1,16 @@
+.nlp-api {
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  h2, .input-field .input-text {
+    width: 100%;
+  }
+  .input-field .input-text > div , .result .output-text > div{
+    border: solid 1px gray;
+  }
+  .input-field .input-text > div::before , .result .output-text > div::before {
+    border-bottom: none;
+  }
+
+}
