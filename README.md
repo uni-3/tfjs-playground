@@ -25,6 +25,15 @@ host `./build` file.
 npm run server
 ```
 
+## setup
+
+setup credentials
+
+`.env`
+`./src/firebase/config.json`
+
+refer sample file.
+
 
 ### reference
 - https://js.tensorflow.org/api/latest/#class:Tensor
