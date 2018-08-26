@@ -3,6 +3,7 @@
 import counter from './Counter'
 import libraryApi from './LibraryApi'
 import nlpApi from './NlpApi'
+import login from './Login'
  
 //複数reducerをimportした場合には、combineReducerでまとめる
  import { combineReducers } from 'redux'
@@ -10,7 +11,8 @@ import nlpApi from './NlpApi'
 const main = combineReducers({
   counter,
   libraryApi,
-  nlpApi
+  nlpApi,
+  login
 })
  
 export default main

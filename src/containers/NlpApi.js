@@ -12,7 +12,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onChange: (e) => dispatch(nlpApiModule.onChange(e)),
+    loadSample: (text) => dispatch(nlpApiModule.loadSample(text)),
     postTextParse: () => dispatch(nlpApiModule.postTextParse()),
+    postLexrank: () => dispatch(nlpApiModule.postLexrank()),
     fetch: () => dispatch(nlpApiModule.fetch())
   }
 }

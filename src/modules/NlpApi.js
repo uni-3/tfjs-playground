@@ -1,10 +1,14 @@
+import CatText from '../assets/mitsuo.json'
+
+
 // action type
 const SET_TEXT = 'SET_TEXT'
 const POST_TEXT_PARSE = 'POST_TEXT_PARSE'
+const POST_LEXRANK = 'POST_LEXRANK'
 const FETCH_SUCCEEDED = 'FETCH_SUCCEEDED'
 
 const initialState = {
-  loading: true,
+  loading: false,
   inputText: '',
   res: null
 }
@@ -20,6 +24,14 @@ export default function nlpApi(state=initialState, action) {
 
     case POST_TEXT_PARSE:
       console.log('post text req', action)
+      return {
+        ...state,
+        ...action.payload,
+        loading: true
+      }
+
+    case POST_LEXRANK:
+      console.log('post lex req', action)
       return {
         ...state,
         ...action.payload,
@@ -49,9 +61,26 @@ export function onChange(e) {
   }
 }
 
+export function loadSample(e) {
+  console.log('load sample', CatText)
+
+  return { 
+    type: SET_TEXT,
+    payload: {
+      inputText: CatText.text
+    }
+  }
+}
+
 export function postTextParse() {
   return { 
     type: POST_TEXT_PARSE 
+  }
+}
+
+export function postLexrank() {
+  return { 
+    type: POST_LEXRANK
   }
 }
 

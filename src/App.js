@@ -6,6 +6,10 @@ import Header from './Header'
 
 import "./App.css"
 
+import createBrowserHistory from 'history/createBrowserHistory'
+const history = createBrowserHistory()
+
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -15,7 +19,8 @@ class App extends Component {
         nlpapi: '/nlpapi',
         imagenet: '/imagenet',
         andgate: '/andgate',
-        polynomial: '/polynomial'
+        polynomial: '/polynomial',
+        //login: '/login'
     }
     this.initState = {
       paths: paths,
@@ -50,12 +55,13 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <div>
           <Header
             onTabChange={this.onTabChange}
             tabValue={this.state.tabValue}
             paths={this.state.paths}
+            history={history}
           />
           <Routes />
         </div>

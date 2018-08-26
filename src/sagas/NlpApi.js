@@ -1,5 +1,5 @@
 import { select, call, put, takeEvery } from 'redux-saga/effects'
-import { postTextParseApi } from './api'
+import { postTextParseApi, postLexrankApi } from './api'
 
 
 // selector 
@@ -8,10 +8,9 @@ const getText = (state) => {
   return state.nlpApi.inputText
 }
 
-// run by action SEARCH_REQUESTED Action
-function* fetchResult(action) {
+
+function* fetchTextParseResult(action) {
   try {
-    console.log('saga', action)
     const stateText = yield select(getText)
     console.log('sage state', stateText)
     const res = yield call(postTextParseApi, stateText)
@@ -22,14 +21,34 @@ function* fetchResult(action) {
   }
 }
 
+
+function* fetchLexrankResult(action) {
+  try {
+    const stateText = yield select(getText)
+    console.log('sage state', stateText)
+    const res = yield call(postLexrankApi, stateText)
+    yield put({type: "FETCH_SUCCEEDED", res: res})
+  } catch (e) {
+    yield put({type: "FETCH_FAILED", message: e.message})
+  }
+}
+
 /*
   run fetchResult post each SEARCH_REQUESTED Action
 */
 function* runTextParseEvery() {
-  console.log('run take')
-  yield takeEvery("POST_TEXT_PARSE", fetchResult)
+  console.log('run text')
+  yield takeEvery("POST_TEXT_PARSE", fetchTextParseResult)
+}
+
+function* runLexrankEvery() {
+  console.log('run lex')
+  yield takeEvery("POST_LEXRANK", fetchLexrankResult)
 }
 
 
-export default runTextParseEvery
+export const nlpApiSagas = [
+  runTextParseEvery(),
+  runLexrankEvery()
+]
 

@@ -51,4 +51,6 @@ export default {
 }
 */
 
-export default runSearchEvery
+export const libraryApiSagas = [
+  runSearchEvery()
+]

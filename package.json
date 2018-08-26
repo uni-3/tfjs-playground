@@ -11,6 +11,8 @@
     "concurrently": "^3.6.0",
     "d3": "^5.5.0",
     "file-uploader": "^1.0.0",
+    "firebase": "^5.4.1",
+    "firebase-tools": "^4.2.0",
     "forever": "^0.15.3",
     "http-server": "^0.11.1",
     "node-sass-chokidar": "^1.3.3",

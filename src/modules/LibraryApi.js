@@ -19,11 +19,10 @@ const initialState = {
 export default function libraryApi(state=initialState, action) {
   switch (action.type) {
     case SEARCH_REQUESTED:
-      console.log('search req', action.payload)
       return {
         ...state,
         ...action.payload,
-        loading: true
+        loading: true,
       }
 
     case SEARCH_SUCCEEDED:
@@ -68,7 +67,8 @@ export function onSearch(e) {
   return { 
     type: SEARCH_REQUESTED,
     payload: {
-      page: 1
+      page: 1,
+      res: []
     }
   }
 }

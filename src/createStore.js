@@ -4,8 +4,8 @@ import createSagaMiddleware from 'redux-saga'
 import logger from 'redux-logger'
 
 import reducer from './modules'
-import runSearchEvery from './sagas/LibraryApi'
-import runTextParseEvery from './sagas/NlpApi'
+import rootSagas from './sagas'
+console.log('rootsage', rootSagas)
 
 // create saga middleware
 const sagaMiddleware = createSagaMiddleware()
@@ -19,8 +19,7 @@ export default function createStore() {
     )
   )
   // run saga
-  sagaMiddleware.run(runSearchEvery)
-  sagaMiddleware.run(runTextParseEvery)
+  sagaMiddleware.run(rootSagas)
 
   return store
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { Button, TextField } from "@material-ui/core"
 import { Table, TableBody, TableHead, TableSortLabel, TableRow, TableCell, TablePagination, TableFooter } from "@material-ui/core"
-import { Tooltip } from "@material-ui/core"
+import { Tooltip, CircularProgress } from "@material-ui/core"
 
 export default class LibraryApi extends Component {
   constructor(props) {
@@ -17,6 +17,16 @@ export default class LibraryApi extends Component {
     if (nextProps.libraryApi.page !== this.props.libraryApi.page) {
       this.props.search()
     }
+  }
+
+  renderLoading(loading) {
+    if (loading === false) {
+      return
+    }
+
+    return (
+      <CircularProgress size={50} />
+    )
   }
 
   renderTableHeader() {
@@ -87,6 +97,12 @@ export default class LibraryApi extends Component {
       return
     }
 
+    const resJson = JSON.parse(res)
+
+    if (resJson.count === 0) {
+      return
+    }
+
     let {order, orderBy} = this.props.libraryApi
     let desc = (a, b, orderBy) => {
       if (b[orderBy] < a[orderBy]) {
@@ -103,33 +119,18 @@ export default class LibraryApi extends Component {
       return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy)
     }
 
-    const resJson = JSON.parse(res)
     const count = resJson.count
     const items = resJson.Items
     const listItems = items.sort(getSorting(order, orderBy)).map((value, index) => {
-      const item = value.Item
+    const item = value.Item
       return (
-        <TableRow
-          key={index}
-        >
-          <TableCell>
-            {item.title}
-          </TableCell>
-          <TableCell>
-            {item.author}
-          </TableCell>
-          <TableCell>
-            {item.publisherName}
-          </TableCell>
-          <TableCell>
-            {item.salesDate}
-          </TableCell>
-          <TableCell>
-            {item.size}
-          </TableCell>
-          <TableCell>
-            {item.itemUrl}
-          </TableCell>
+        <TableRow key={index}>
+          <TableCell>{item.title}</TableCell>
+          <TableCell>{item.author}</TableCell>
+          <TableCell>{item.publisherName}</TableCell>
+          <TableCell>{item.salesDate}</TableCell>
+          <TableCell>{item.size}</TableCell>
+          <TableCell>{item.itemUrl}</TableCell>
         </TableRow>
       )
     })
@@ -156,12 +157,13 @@ export default class LibraryApi extends Component {
     console.log('loading', loading)
     return(
       <div>
-        <h2>library api</h2>
+        <h2>Book api</h2>
         <form onSubmit={onSearch}>
           <TextField name="title" label="Title" value={title} onChange={changedForm} />
           <TextField name="author" label="Author" value={author} onChange={changedForm} />
           <Button type="submit" variant="outlined" color="primary">search</Button>
         </form>
+        { this.renderLoading(loading)}
         { this.renderTable(res) }
       </div>
     )
