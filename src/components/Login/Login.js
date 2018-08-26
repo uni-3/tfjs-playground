@@ -8,23 +8,23 @@ const appTokenKey = 'key'
 export default class Login extends Component {
 
   componentWillMount() { 
-      console.log('get storage did', localStorage.getItem(appTokenKey))
+    console.log('login prop', this.props)
+
+    // ログインしているとき
+    if (localStorage.getItem(appTokenKey)) {
+      this.props.history.push("/")
+      return
+    } else {
+      this.props.logout()
+    }
+
+    // ログインしたとき
     if (this.props.login.uid !== '') {
-      console.log('set storage')
       localStorage.setItem(appTokenKey, this.props.login.uid)
     }
 
-    /**
-     * We have appToken relevant for our backend API
-     */
-    if (localStorage.getItem(appTokenKey)) {
-      console.log('get storage')
-      this.props.history.push("/")
-      return
-    }
-
+    // ログイン確認
     this.props.refLogin()
-
   }
 
 
@@ -33,14 +33,9 @@ export default class Login extends Component {
       localStorage.setItem(appTokenKey, this.props.login.uid)
     }
 
-    /**
-     * We have appToken relevant for our backend API
-     */
-    console.log('next', nextProps)
-    console.log('props', this.props.login)
-    if (nextProps.login !== this.props.login) {
+    // ログインしている
+    if (nextProps.login.uid && this.props.login.uid) {
       if (localStorage.getItem(appTokenKey)) {
-        console.log('push to /')
         this.props.history.push("/")
         return
       }
@@ -48,7 +43,6 @@ export default class Login extends Component {
   }
 
   render() {
-    console.log('login prop', this.props)
     const { onLogin } = this.props
     return(
       <div>

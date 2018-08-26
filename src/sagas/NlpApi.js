@@ -4,7 +4,6 @@ import { postTextParseApi, postLexrankApi } from './api'
 
 // selector 
 const getText = (state) => {
-  console.log("get", state)
   return state.nlpApi.inputText
 }
 
@@ -12,9 +11,9 @@ const getText = (state) => {
 function* fetchTextParseResult(action) {
   try {
     const stateText = yield select(getText)
-    console.log('sage state', stateText)
+    //console.log('sage state', stateText)
     const res = yield call(postTextParseApi, stateText)
-    console.log('saga res', res)
+    //console.log('saga res', res)
     yield put({type: "FETCH_SUCCEEDED", res: res})
   } catch (e) {
     yield put({type: "FETCH_FAILED", message: e.message})
@@ -25,7 +24,6 @@ function* fetchTextParseResult(action) {
 function* fetchLexrankResult(action) {
   try {
     const stateText = yield select(getText)
-    console.log('sage state', stateText)
     const res = yield call(postLexrankApi, stateText)
     yield put({type: "FETCH_SUCCEEDED", res: res})
   } catch (e) {
@@ -37,12 +35,10 @@ function* fetchLexrankResult(action) {
   run fetchResult post each SEARCH_REQUESTED Action
 */
 function* runTextParseEvery() {
-  console.log('run text')
   yield takeEvery("POST_TEXT_PARSE", fetchTextParseResult)
 }
 
 function* runLexrankEvery() {
-  console.log('run lex')
   yield takeEvery("POST_LEXRANK", fetchLexrankResult)
 }
 

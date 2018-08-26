@@ -14,7 +14,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onLogin: () => dispatch(loginModule.onLogin()),
-    refLogin: () => dispatch(loginModule.refLogin())
+    refLogin: () => dispatch(loginModule.refLogin()),
+    logout: () => dispatch(loginModule.logout())
   }
 }
 

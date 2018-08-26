@@ -25,7 +25,6 @@ export default function login(state=initialState, action) {
       }
 
     case LOGIN_SUCCEEDED:
-    console.log('login ok', action)
       return {
         ...state,
         ...action.payload
@@ -50,13 +49,13 @@ export const onLogin = () => {
 }
 
 export const refLogin = () => {
-  console.log('create loginref')
   return {
     type: REF_LOGIN
   }
 }
 
 export const logout = () => {
+  console.log('logout')
   return {
     type: LOGOUT
   } 

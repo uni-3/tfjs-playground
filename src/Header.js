@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router'
 import { Link } from "react-router-dom"
 
 import {Tab, Tabs} from '@material-ui/core'
@@ -10,7 +11,7 @@ import "./Header.css"
 import firebase from 'firebase'
 const appTokenKey = 'key'
 
-export default class Header extends Component {
+class Header extends Component {
 
   componentDidMount() {
 
@@ -87,3 +88,5 @@ export default class Header extends Component {
     )
   }
 }
+
+export default withRouter(Header)

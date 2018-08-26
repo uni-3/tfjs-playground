@@ -5,7 +5,7 @@ import firebase from 'firebase'
 
 
 function* onLogin(action) {
-  console.log('onlogin saga')
+  //console.log('onlogin saga')
   let provider = new firebase.auth.GoogleAuthProvider()
   firebase.auth().signInWithPopup(provider)
   yield put({type: REF_LOGIN})
@@ -13,19 +13,18 @@ function* onLogin(action) {
 
 
 function* refLogin(action) {
-  console.log('ref login saga')
+  //console.log('ref login saga')
   let user = yield call(onAuthStateChanged)
   yield put({type: LOGIN_SUCCEEDED, payload: user})
 }
 
 function onAuthStateChanged() {
-  console.log('ref login saga')
   return new Promise((resolve, reject) => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         resolve(user);
       } else {
-        console.log('ref login saga e')
+        console.log('ref login saga error')
         //reject(new Error('login error!'));
       }
     });

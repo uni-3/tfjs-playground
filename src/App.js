@@ -19,8 +19,7 @@ class App extends Component {
         nlpapi: '/nlpapi',
         imagenet: '/imagenet',
         andgate: '/andgate',
-        polynomial: '/polynomial',
-        //login: '/login'
+        polynomial: '/polynomial'
     }
     this.initState = {
       paths: paths,
@@ -61,7 +60,6 @@ class App extends Component {
             onTabChange={this.onTabChange}
             tabValue={this.state.tabValue}
             paths={this.state.paths}
-            history={history}
           />
           <Routes />
         </div>
