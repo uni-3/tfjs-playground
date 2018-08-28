@@ -5,11 +5,30 @@ import { Tooltip, CircularProgress } from "@material-ui/core"
 import InsertComment from '@material-ui/icons/InsertComment'
 import Dropzone from 'react-dropzone'
 
+import Wordcloud from '../Wordcloud/Wordcloud'
 import CatText from "../../assets/wagahaiwa_nekodearu.txt"
 import './NlpApi.css'
 
 
 export default class NlpApi extends Component {
+
+  wordcloudData() {
+    let res = this.props.nlpApi.res
+    if (res === null || res.tfidfs === undefined) {
+      return null
+    }
+
+    let d = []
+    for (let key in res.tfidfs[0]) {
+      d.push({
+        text: key,
+        value: res.tfidfs[0][key]
+      })
+    }
+    return d
+  }
+
+
 
   renderLoading(loading) {
     if (loading === false) {
@@ -24,12 +43,12 @@ export default class NlpApi extends Component {
   }
 
   renderResult() {
-    let props = this.props.nlpApi
-    if (props.res === null) {
+    let res = this.props.nlpApi.res
+    if (res === null) {
       return
     }
-    let text = JSON.stringify(props.res, null, 2)
-    console.log('text', text)
+    let text = JSON.stringify(res, null, 2)
+
     return (
       <div className="result">
         <TextField
@@ -50,9 +69,10 @@ export default class NlpApi extends Component {
   render() {
     console.log('nlp comp this', this)
     const { nlpApi, onChange, postTextParse, postLexrank, loadSample } = this.props
-    const { inputText, loading } = nlpApi
+    const { inputText, loading, res } = nlpApi
     let  postDisable = inputText.length === 0 ? 'disabled' : null
     console.log('dis', postDisable)
+
     return (
       <div className="nlp-api">
         <h2>日本語解析</h2>
@@ -95,6 +115,9 @@ export default class NlpApi extends Component {
         </div>
         {this.renderResult()}
         {this.renderLoading(loading)}
+        <Wordcloud
+          data={this.wordcloudData()}
+        />
       </div>
     )
   }
