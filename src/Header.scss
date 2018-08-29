@@ -1,18 +1,29 @@
 
-.App-logo {
-  //animation: App-logo-spin infinite 20s linear;
-  height: 40px;
-}
 
 .App-header {
-  background-color:	#5fa769;
+  background-color: #CBFFD3;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   /*
   color: white;
-  height: 100px;
-  padding: 1em;
   */
+  .App-logo {
+    height: auto;
+    width: 12%;
+  }
 
-  div {
-    text-align: right;
+  .content {
+    position: relative;
+    width: 88%;
+
+    .logout {
+      text-align: right;
+    }
+
+    .tabs {
+      position: absolute;
+      bottom: 0;
+    }
   }
 }

@@ -1,12 +1,19 @@
-.App-logo {
-  height: 40px; }
-
 .App-header {
-  background-color: #5fa769;
+  background-color: #CBFFD3;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   /*
   color: white;
-  height: 100px;
-  padding: 1em;
   */ }
-  .App-header div {
-    text-align: right; }
+  .App-header .App-logo {
+    height: auto;
+    width: 12%; }
+  .App-header .content {
+    position: relative;
+    width: 88%; }
+    .App-header .content .logout {
+      text-align: right; }
+    .App-header .content .tabs {
+      position: absolute;
+      bottom: 0; }

@@ -94,7 +94,9 @@ export default class NlpApi extends Component {
             >文章要約</Button>
           </div>
           <div className="inputs">
-            <Tooltip title="load sample text" placement="right">
+            <Tooltip
+              title="load sample text"
+              placement="top">
               <Button 
                 onClick={loadSample} 
                 className="button"

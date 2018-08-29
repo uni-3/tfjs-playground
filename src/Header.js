@@ -37,7 +37,7 @@ class Header extends Component {
       return
     }
     return (
-      <div>
+      <div class="logout">
         <Button
           onClick={this.onLogout.bind(this)}
           variant="outlined"
@@ -59,6 +59,7 @@ class Header extends Component {
         onChange={props.onTabChange}
         indicatorColor="secondary"
         textColor="secondary"
+        className="tabs"
       >
         {
           Object.keys(props.paths).map((key, index) => {
@@ -81,12 +82,14 @@ class Header extends Component {
     return (
       <header className="App-header">
         <img src={Logo} className="App-logo" alt="logo" />
-        <h1 className="App-title">tfjs playground</h1>
-        {this.renderLogout()}
-        {this.renderTab(props)}
+        <div className="content">
+          {this.renderLogout()}
+          {this.renderTab(props)}
+        </div>
       </header>
     )
   }
 }
+        //<h1 className="App-title">tfjs playground</h1>
 
 export default withRouter(Header)
