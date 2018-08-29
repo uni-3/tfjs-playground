@@ -29,8 +29,10 @@ export const postBookApi = (formValue) => {
 }
 
 
-export const postTextParseApi = (text) => {
+export const postTextParseApi = (text, params) => {
   let url = process.env.REACT_APP_TEXT_API_URL
+
+  let path = '/mecab/v1/text-parse'
 
   let body = {
     sentence: text
@@ -45,7 +47,12 @@ export const postTextParseApi = (text) => {
   })
 
 
-  return ax.post('/mecab/v1/text-parse', body).then((res) => {
+  return ax({
+    method: 'post',
+    url: path,
+    data: body,
+    params: params
+  }).then((res) => {
     console.log('res axios', res)
     return res.data.results
   }).catch((err) => {
@@ -55,13 +62,13 @@ export const postTextParseApi = (text) => {
 }
 
 
-export const postLexrankApi = (text) => {
+export const postLexrankApi = (text, params) => {
   let url = process.env.REACT_APP_TEXT_API_URL
 
-  // ['sentence1', 'sentence2', ...]
-  //let sentences = text.split('\n')
-  //sentences = sentences.join(',')
-  let sentences = text
+  // 'sentence1, sentence2'
+  let sentences = text.replace(/\n/g, ', ')
+  //let sentences = text
+  let path = '/lexrank'
 
   let body = {
     sentences: sentences
@@ -76,8 +83,12 @@ export const postLexrankApi = (text) => {
   })
   console.log('axios base', ax)
 
-
-  return ax.post('/lexrank', body).then((res) => {
+  return ax({
+    method: 'post',
+    url: path,
+    data: body,
+    params: params
+  }).then((res) => {
     console.log('res axios', res)
     return res.data.results
   }).catch((err) => {

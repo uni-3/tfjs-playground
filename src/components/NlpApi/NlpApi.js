@@ -69,7 +69,7 @@ export default class NlpApi extends Component {
   render() {
     console.log('nlp comp this', this)
     const { nlpApi, onChange, postTextParse, postLexrank, loadSample } = this.props
-    const { inputText, loading, res } = nlpApi
+    const { inputText, inputNgram, loading, res } = nlpApi
     let  postDisable = inputText.length === 0 ? 'disabled' : null
     console.log('dis', postDisable)
 
@@ -93,25 +93,42 @@ export default class NlpApi extends Component {
               disabled={postDisable}
             >文章要約</Button>
           </div>
-          <Tooltip title="load sample text" placement="right">
-            <Button 
-              onClick={loadSample} 
-              className="button"
-              size="small"
-              color="secondary"
-            >
-              <InsertComment className="icon" />
-            </Button>
-          </Tooltip>
-          <TextField
-            id="inputtext"
-            label="日本語の文章"
-            placeholder="ポケモンGO"
-            multiline
-            className="input-text"
-            onChange={onChange}
-            value={inputText}
-          />
+          <div className="inputs">
+            <Tooltip title="load sample text" placement="right">
+              <Button 
+                onClick={loadSample} 
+                className="button"
+                size="small"
+                color="secondary"
+              >
+                <InsertComment className="icon" />
+              </Button>
+            </Tooltip>
+            <TextField
+              id="ngram"
+              label="Ngram"
+              value={inputNgram}
+              onChange={onChange}
+              type="number"
+              className="ngram"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              inputProps = {{
+                min: "1",
+                step: "1"
+              }}
+            />
+            <TextField
+              id="text"
+              label="日本語の文章"
+              placeholder="ポケモンGO"
+              multiline
+              className="text"
+              onChange={onChange}
+              value={inputText}
+            />
+          </div>
         </div>
         {this.renderResult()}
         {this.renderLoading(loading)}

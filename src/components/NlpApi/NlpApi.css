@@ -1,25 +1,47 @@
 .nlp-api {
   display: flex;
-  flex-wrap: wrap; }
-  .nlp-api h2 {
-    width: 100%; }
-  .nlp-api .input-field, .nlp-api .result {
-    display: flex;
-    flex-direction: column; }
-    .nlp-api .input-field .post-buttons, .nlp-api .result .post-buttons {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 1%; }
-      .nlp-api .input-field .post-buttons .button, .nlp-api .result .post-buttons .button {
-        width: 25%;
-        margin-left: 1%; }
-    .nlp-api .input-field > .button, .nlp-api .result > .button {
-      margin-right: auto; }
-  .nlp-api .input-field .input-text > div, .nlp-api .result .output-text > div {
-    box-sizing: border-box;
-    border: solid 1px #ff0000; }
-  .nlp-api .input-field .input-text > div::before, .nlp-api .result .output-text > div::before {
-    border-bottom: none; }
-  .nlp-api .input-field, .nlp-api .result {
-    margin-left: 2%;
-    width: 46%; }
+  flex-wrap: wrap;
+}
+
+.nlp-api h2 {
+  width: 100%;
+}
+
+.nlp-api .input-field, .nlp-api .result {
+  display: flex;
+  flex-direction: column;
+}
+
+.nlp-api .input-field .post-buttons, .nlp-api .result .post-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1%;
+}
+
+.nlp-api .input-field .post-buttons .button, .nlp-api .result .post-buttons .button {
+  width: 25%;
+  margin-left: 1%;
+}
+
+.nlp-api .input-field .inputs .ngram, .nlp-api .result .inputs .ngram {
+  width: 15%;
+  margin-left: 1%;
+}
+
+.nlp-api .input-field .inputs .text, .nlp-api .result .inputs .text {
+  width: 100%;
+}
+
+.nlp-api .input-field .text > div, .nlp-api .result .output-text > div {
+  box-sizing: border-box;
+  border: solid 1px #ff0000;
+}
+
+.nlp-api .input-field .text > div::before, .nlp-api .result .output-text > div::before {
+  border-bottom: none;
+}
+
+.nlp-api .input-field, .nlp-api .result {
+  margin-left: 2%;
+  width: 46%;
+}

@@ -10,6 +10,7 @@ const FETCH_SUCCEEDED = 'FETCH_SUCCEEDED'
 const initialState = {
   loading: false,
   inputText: '',
+  inputNgram: 1,
   res: null
 }
 
@@ -53,10 +54,16 @@ export default function nlpApi(state=initialState, action) {
 
 // action-creator
 export function onChange(e) {
+  let key = 'inputText'
+  console.log('onchange text', e.target.name)
+  console.log('onchange text', e.target.id)
+  if (e.target.id === 'ngram') {
+    key = 'inputNgram'
+  }
   return { 
     type: SET_TEXT,
     payload: {
-      inputText: e.target.value
+      [key]: e.target.value
     }
   }
 }
