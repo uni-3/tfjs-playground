@@ -7,7 +7,7 @@
   color: white;
   */ }
   .App-header .App-logo {
-    height: auto;
+    height: 100%;
     width: 12%; }
   .App-header .content {
     position: relative;

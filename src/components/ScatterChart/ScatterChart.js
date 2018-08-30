@@ -54,6 +54,7 @@ export default class ScatterChart extends Component {
         columns={this.state.columns}
         options={this.state.options}
         graph_id="Chart"
+        loader={<div>Loading Chart</div>}
         chartEvents={this.chartEvents}
         className="Poly-chart"
         legendToggle

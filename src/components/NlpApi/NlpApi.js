@@ -6,6 +6,7 @@ import InsertComment from '@material-ui/icons/InsertComment'
 import Dropzone from 'react-dropzone'
 
 import Wordcloud from '../Wordcloud/Wordcloud'
+import TableWithBar from '../TableWithBar/TableWithBar'
 import CatText from "../../assets/wagahaiwa_nekodearu.txt"
 import './NlpApi.css'
 
@@ -25,6 +26,21 @@ export default class NlpApi extends Component {
         value: res.tfidfs[0][key]
       })
     }
+    return d
+  }
+
+  tableWithBarData() {
+    let res = this.props.nlpApi.res
+    if (res === null || res.tfidfs === undefined) {
+      return null
+    }
+
+    let header = ['word', 'score']
+    let d = [header]
+    Object.entries(res.tfidfs[0]).forEach(([key, value]) => {
+      d.push([key, value])
+    })
+
     return d
   }
 
@@ -136,6 +152,9 @@ export default class NlpApi extends Component {
         {this.renderLoading(loading)}
         <Wordcloud
           data={this.wordcloudData()}
+        />
+        <TableWithBar
+          data={this.tableWithBarData()}
         />
       </div>
     )
