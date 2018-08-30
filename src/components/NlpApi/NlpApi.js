@@ -93,6 +93,7 @@ export default class NlpApi extends Component {
       <div className="nlp-api">
         <h2>日本語解析</h2>
         <div className="input-field">
+          {this.renderLoading(loading)}
           <div className="post-buttons">
             <Button 
               onClick={postTextParse} 
@@ -149,7 +150,6 @@ export default class NlpApi extends Component {
           </div>
         </div>
         {this.renderResult()}
-        {this.renderLoading(loading)}
         <Wordcloud
           data={this.wordcloudData()}
         />
