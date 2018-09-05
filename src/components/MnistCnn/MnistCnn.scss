@@ -1,0 +1,30 @@
+:local .predicts {
+
+  .results {
+    display: flex;
+    flex-wrap: wrap;
+    //justify-content: space-around;
+
+  }
+  .predict-image {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1%;
+    margin-bottom: 1%;
+    //width: 100px;
+
+    .pred-incorrect {
+      background-color: red;
+      color: white;
+    }
+
+    .pred-correct {
+      background-color: green;
+      color: white;
+    }
+
+    .pred-canvas {
+      width: 100px;
+    }
+  }
+}

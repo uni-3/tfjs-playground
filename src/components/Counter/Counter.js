@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { Button, TextField } from "@material-ui/core"
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
-//remove
 
 import NetworkD3 from '../NetworkD3/NetworkD3'
+import MnistTsne from '../MnistTsne/MnistTsne'
+import MnistCnn from '../MnistCnn/MnistCnn'
 
 export default class Counter extends Component {
 
@@ -29,8 +30,10 @@ export default class Counter extends Component {
             }}
           />
         </div>
-        <NetworkD3 />
+        <MnistCnn />
       </div>
     )
+        //<NetworkD3 />
+        //<MnistTsne />
   }
 }
