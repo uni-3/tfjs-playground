@@ -5,6 +5,7 @@ import Counter from "./containers/Counter"
 import LibraryApi from "./containers/LibraryApi"
 import NlpApi from "./containers/NlpApi"
 import Login from "./containers/Login"
+import MnistCnn from "./containers/MnistCnn"
 
 import ImageNetPage from "./components/ImageNetPage"
 import AndGatePage from "./components/AndGatePage"
@@ -29,6 +30,7 @@ export default class Routes extends Component {
             <Route exact path="/imagenet" component={ImageNetPage} />
             <Route exact path="/andgate" component={AndGatePage} />
             <Route exact path="/polynomial" component={PolynomialPage} />
+            <Route exact path="/mnistcnn" component={MnistCnn} />
           </Switch>
         </Auth>
       </Switch>

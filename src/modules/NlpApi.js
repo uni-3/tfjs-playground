@@ -1,11 +1,13 @@
-import CatText from '../assets/mitsuo.json'
+import sampleText from '../assets/mitsuo.json'
 
 
 // action type
-const SET_TEXT = 'SET_TEXT'
-const POST_TEXT_PARSE = 'POST_TEXT_PARSE'
-const POST_LEXRANK = 'POST_LEXRANK'
-const FETCH_SUCCEEDED = 'FETCH_SUCCEEDED'
+export const SET_TEXT = 'SET_TEXT'
+export const POST_TEXT_PARSE = 'POST_TEXT_PARSE'
+export const POST_LEXRANK = 'POST_LEXRANK'
+export const POST_LDA = 'POST_LDA'
+export const FETCH_SUCCEEDED = 'FETCH_SUCCEEDED'
+export const FETCH_FAILED = 'FETCH_FAILED'
 
 const initialState = {
   loading: false,
@@ -33,6 +35,14 @@ export default function nlpApi(state=initialState, action) {
 
     case POST_LEXRANK:
       console.log('post lex req', action)
+      return {
+        ...state,
+        ...action.payload,
+        loading: true
+      }
+
+    case POST_LDA:
+      console.log('post lda req', action)
       return {
         ...state,
         ...action.payload,
@@ -69,29 +79,35 @@ export function onChange(e) {
 }
 
 export function loadSample(e) {
-  console.log('load sample', CatText)
+  console.log('load sample', sampleText)
 
   return { 
     type: SET_TEXT,
     payload: {
-      inputText: CatText.text
+      inputText: sampleText.text
     }
   }
 }
 
-export function postTextParse() {
+export const postTextParse = () => {
   return { 
     type: POST_TEXT_PARSE 
   }
 }
 
-export function postLexrank() {
+export const postLexrank = () => {
   return { 
     type: POST_LEXRANK
   }
 }
 
-export function fetch() {
+export const postLda = () => {
+  return { 
+    type: POST_LDA
+  }
+}
+
+export const fetch = () => {
   return { 
     type: FETCH_SUCCEEDED
   }

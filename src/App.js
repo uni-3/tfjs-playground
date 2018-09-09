@@ -19,7 +19,8 @@ class App extends Component {
         nlpapi: '/nlpapi',
         imagenet: '/imagenet',
         andgate: '/andgate',
-        polynomial: '/polynomial'
+        polynomial: '/polynomial',
+        mnistcnn: '/mnistcnn',
     }
     this.initState = {
       paths: paths,

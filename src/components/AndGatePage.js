@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import * as tf from '@tensorflow/tfjs'
 
 import AndGate from './AndGate/AndGate'
-import LossChart from './LossChart/LossChart'
+import LineChart from './LineChart/LineChart'
 
-import './AndGatePage.css';
+import styles from './AndGatePage.css'
 
 class AndGatePage extends Component {
   constructor(props) {
@@ -107,8 +107,35 @@ class AndGatePage extends Component {
 
   render() {
     let lossArray = this.state.lossArray.length ? this.state.lossArray : [[0,0]]
+    let chartData = [
+      {
+        rows: lossArray,
+        hAxis: {
+          title: 'epoch',
+          minValue: 0,
+          maxValue: this.state.epochs
+        },
+        vAxis: {
+          title: 'loss',
+          minValue: 0,
+          maxValue: 0.1 
+        },
+        legend: 'left',
+        columns: [
+          {
+            type: 'number',
+            label: 'Epoch'
+          },
+          {
+            type: 'number',
+            label: 'Loss'
+          }
+        ],
+        title: 'Epoch vs. Loss'
+      }
+    ]
     return (
-      <div className="AndGate">
+      <div className={styles.AndGate}>
         <h2>Train&Predict Andgate</h2>
         <AndGate
           formChangedHandler={this.formChangedHandler}
@@ -120,11 +147,22 @@ class AndGatePage extends Component {
           epochs={this.state.epochs}
           learningRate={this.state.learningRate}
           predictedOutput={this.state.predictedOutput} />
-        <div>
-          <LossChart lossArray={lossArray} epochs={this.state.epochs} />
-        </div>
+
+        { chartData.map(data => {
+          return (
+            <LineChart 
+              rows={data.rows}
+              hAxis={data.hAxis}
+              vAxis={data.vAxis}
+              legend={data.legend}
+              columns={data.columns}
+              title={data.title}
+              className={styles['line-chart']}
+            />
+          )
+        })}
       </div>
-    );
+    )
   }
 }
 

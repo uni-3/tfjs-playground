@@ -60,6 +60,7 @@ class Header extends Component {
         indicatorColor="secondary"
         textColor="secondary"
         className="tabs"
+        //scrollable // not work for  bug https://github.com/mui-org/material-ui/issues/12524
       >
         {
           Object.keys(props.paths).map((key, index) => {

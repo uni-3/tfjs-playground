@@ -3,6 +3,7 @@
 import counter from './Counter'
 import libraryApi from './LibraryApi'
 import nlpApi from './NlpApi'
+import mnistCnn from './MnistCnn'
 import login from './Login'
  
 //複数reducerをimportした場合には、combineReducerでまとめる
@@ -12,6 +13,7 @@ const main = combineReducers({
   counter,
   libraryApi,
   nlpApi,
+  mnistCnn,
   login
 })
  

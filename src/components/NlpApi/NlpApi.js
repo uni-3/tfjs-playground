@@ -84,7 +84,7 @@ export default class NlpApi extends Component {
 
   render() {
     console.log('nlp comp this', this)
-    const { nlpApi, onChange, postTextParse, postLexrank, loadSample } = this.props
+    const { nlpApi, onChange, postTextParse, postLexrank, postLda, loadSample } = this.props
     const { inputText, inputNgram, loading, res } = nlpApi
     let  postDisable = inputText.length === 0 ? 'disabled' : null
     console.log('dis', postDisable)
@@ -109,6 +109,13 @@ export default class NlpApi extends Component {
               className="button"
               disabled={postDisable}
             >文章要約</Button>
+            <Button 
+              onClick={postLda}
+              variant="outlined"
+              color="primary"
+              className="button"
+              disabled={postDisable}
+            >トピック抽出</Button>
           </div>
           <div className="inputs">
             <Tooltip

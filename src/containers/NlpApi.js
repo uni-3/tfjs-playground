@@ -15,6 +15,7 @@ const mapDispatchToProps = dispatch => {
     loadSample: (text) => dispatch(nlpApiModule.loadSample(text)),
     postTextParse: () => dispatch(nlpApiModule.postTextParse()),
     postLexrank: () => dispatch(nlpApiModule.postLexrank()),
+    postLda: () => dispatch(nlpApiModule.postLda()),
     fetch: () => dispatch(nlpApiModule.fetch())
   }
 }

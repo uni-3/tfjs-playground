@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import { Button, TextField } from '@material-ui/core'
 
+import * as d3 from 'd3'
+
+import LineChart from '../LineChart/LineChart'
+
 import { MnistData, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_SIZE, CLASSES, TEST_ELEMENTS } from '../MnistTsne/data'
-import { MnistModel } from './model'
+//import { MnistModel } from './model'
 
 import styles from './MnistCnn.css'
 
@@ -17,48 +21,98 @@ export default class MnistCnn extends Component {
       predictions: null,
       labels: null,
       lossValues: [],
-      accValues: [] 
-
+      accValues: [],
+      embeddingLabels: [],
+      embeddingPredicts: [],
+      width: 500,
+      height: 500
     }
+    this.colors = d3.scaleOrdinal(d3.schemeCategory10)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const canvas = this.refs.canvas
-    let mnistModel = new MnistModel(canvas)
+    // action initModel
+    this.props.initModel(canvas)
 
-    mnistModel.initModel()
+    // canvas for embedding
+    await this.initVisualization()
+  }
 
-    console.log('mnist model', mnistModel)
+  async initVisualization() {
+    let canvas = d3.select('#emb-vis').append('canvas')
+             .attr('width', this.state.width)
+             .attr('height', this.state.height)
+    let context = canvas.node().getContext('2d')
+
     this.setState({
-      mnistModel: mnistModel
+      context: context
     })
+  }
+
+  async trainData() {
+    let { mnistModel } = this.props.mnistCnn
+
+    const lossValues = []
+    const accValues = []
+    console.log('train this.', this)
+
+    for (let i = 0; i < mnistModel.trainBatch; i++) {
+      console.log('train')
+      //let [lossValue, accValue] = await this.trainFrame(i)
+      let [lossValue, accValue] = await mnistModel.trainFrame(i)
+      lossValues.push(lossValue)
+      accValues.push(accValue)
+
+      // get embedding
+      let [labels, predicts] = await mnistModel.getLayerModel(500)
+
+      //console.log('embedding predicts', predicts)
+      this.setState({
+        lossValues: lossValues,
+        accValues: accValues,
+        embeddingLabels: labels,
+        embeddingPredicts: predicts
+      })
+    }
+
+    //let lastLoss = lossValues[lossValues.length - 1].loss.toFixed(2)
+    //let lastAcc = accValues[accValues.length - 1].accuracy.toFixed(2)
+
+    console.log('train finish: ')
+    //console.log('loss: ', lastLoss)
+    //console.log('acc: ', lastAcc)
+    //const layer = mnistModel.model.getLayer('conv2d_Conv2D1_input')
+    return [lossValues, accValues]
   }
 
   async onTrain(e) { 
-    let [lossValues, accValues] =  await this.state.mnistModel.train()
-
+    let [lossValues, accValues] = await this.trainData()
     this.setState({
-      lossValues: lossValues,
-      accValues: accValues
+      width: 500,
+      height: 500
     })
   }
 
- async onTest(e) { 
-   console.log('on test')
-   let predNum = 20
-   let [batch, predictions, labels] = await this.state.mnistModel.predict(predNum)
-   console.log('pred state', batch, predictions, labels)
-   this.setState({
-     batch: batch,
-     predictions: predictions,
-     labels: labels
-   })
- }
+
+  async onTest(e) { 
+    console.log('on test')
+    let { mnistModel } = this.props.mnistCnn
+    let predNum = 20
+    let [batch, predictions, labels] = await mnistModel.predict(predNum)
+    console.log('pred state', batch, predictions, labels)
+    this.setState({
+      batch: batch,
+      predictions: predictions,
+      labels: labels
+    })
+  }
+
 
   drawImage(image, canvas) {
     if (canvas === null) {
-      return
-    }
+     return
+   }
 
     const [width, height] = [IMAGE_WIDTH, IMAGE_HEIGHT]
     canvas.width = width
@@ -75,6 +129,156 @@ export default class MnistCnn extends Component {
     }
     ctx.putImageData(imageData, 0, 0)
   }
+
+
+  renderEmbedding() {
+    const labels = this.state.embeddingLabels
+    const data = this.state.embeddingPredicts
+
+    const context = this.state.context
+
+    const x = d3.scaleLinear().range([0, this.state.width]).domain([-1.2, 1.1])
+    const y = d3.scaleLinear().range([0, this.state.height]).domain([-1.2, 1.1])
+
+    //console.log('emb data', data)
+    //console.log('emb label',  labels)
+    context.clearRect(0, 0, this.state.width, this.state.height)
+
+    context.font = '16px sans'
+    context.fillStyle = '#000000'
+    context.fillText('Emedding', x(0), y(-1.1))
+    labels.forEach((d, i) => {
+      let dataX =  data[i*2]
+      let dataY = data[i*2+1]
+      //console.log('index', i)
+      //console.log('x indei', dataX)
+      //console.log('y index ', dataY)
+      context.font = '10px sans'
+      context.fillStyle = this.colors(parseInt(labels[i], 10))
+      context.fillText(labels[i], x(dataX), y(dataY))
+    })
+  }
+ 
+
+  extGoogleChartData() {
+    if (this.state.lossValues.length === 0) {
+      return []
+    }
+    let lossValues = this.state.lossValues
+    let accValues = this.state.accValues
+    let lastLoss = lossValues[lossValues.length - 1].loss.toFixed(2)
+    let lastAcc = accValues[accValues.length - 1].accuracy.toFixed(2)
+
+    let lossData = lossValues.map((lossValue, index) => {
+      return [index, lossValue.loss]
+    })
+    
+
+    let accData = accValues.map((accValue, index) => {
+        return [index, accValue.accuracy]
+      })
+
+    return [lossData, accData, lastLoss, lastAcc]
+
+  }
+
+  renderLineCharts(chartDatas) {
+    return (
+      chartDatas.map(data => {
+        return (
+          <div className={styles['train-charts']}>
+            epoch {data.rows.length}: {data.lastData}
+            <LineChart
+              rows={data.rows}
+              hAxis={data.hAxis}
+              vAxis={data.vAxis}
+              legend={data.legend}
+              columns={data.columns}
+              title={data.title}
+              className={styles['line-chart']}
+            />
+          </div>
+        )
+      })
+    )
+  }
+
+  renderTrainResults() {
+    console.log('render train result.')
+    if (this.state.lossValues.length === 0) {
+      return
+    }
+    let { mnistModel } = this.props.mnistCnn
+
+    let [lossData, accData, lastLoss, lastAcc] = this.extGoogleChartData()
+    //console.log('render train data.', lastAcc, lastLoss)
+    let lossChartData = [
+      {
+        lastData: lastLoss,
+        rows: lossData,
+        hAxis: {
+          title: 'epoch',
+          minValue: 0,
+          maxValue: mnistModel.trainBatch
+        },
+        vAxis: {
+          title: 'loss',
+          minValue: 0,
+          maxValue: 0.1 
+        },
+        //legend: 'left',
+        columns: [
+          {
+            type: 'number',
+            label: 'Epoch'
+          },
+          {
+            type: 'number',
+            label: 'Loss'
+          }
+        ],
+        title: 'Epoch vs. Loss'
+      }
+    ]
+
+    let accChartData = [
+      {
+        lastData: lastAcc,
+        rows: accData,
+        hAxis: {
+          title: 'epoch',
+          minValue: 0,
+          maxValue: mnistModel.trainBatch
+        },
+        vAxis: {
+          title: 'acc',
+          minValue: 0,
+          maxValue: 1.0
+        },
+        //legend: 'left',
+        columns: [
+          {
+            type: 'number',
+            label: 'Epoch'
+          },
+          {
+            type: 'number',
+            label: 'Accuracy'
+          }
+        ],
+        title: 'Epoch vs. Accuracy'
+      }
+    ]
+
+    return (
+      <div className={styles['train-results']}>
+        {this.renderLineCharts(accChartData)}
+        {this.renderLineCharts(lossChartData)}
+        {this.renderEmbedding()}
+      </div>
+    )
+  }
+
 
   renderTestResults(batch, predictions, labels) {
     if (batch === null) {
@@ -122,8 +326,16 @@ export default class MnistCnn extends Component {
 
   render() {
     let {batch, predictions, labels} = this.state
+
+
+    //if (this.state.context === null) {
+    //  this.renderEmbedding()
+    //}
+
+    let lvs = this.state.lossValues.length
+    let embStyle = lvs === 0 ? `${styles.embedding} ${styles.displaynone}` : `${styles.embedding}`
     return (
-      <div>
+      <div className={styles.mnistcnn}>
         <h3>train</h3>
         <div>
           <Button
@@ -131,6 +343,10 @@ export default class MnistCnn extends Component {
             color="primary"
             onClick={this.onTrain.bind(this)}
           >train</Button>
+          {this.renderTrainResults()}
+
+          <div id="emb-vis" className={embStyle}>
+          </div>
         </div>
 
         <h3>test</h3>
@@ -145,7 +361,7 @@ export default class MnistCnn extends Component {
 
         <canvas
           ref="canvas"
-          className="mnistdata"
+          className={styles.mnistdata}
         ></canvas>
       </div>
 
