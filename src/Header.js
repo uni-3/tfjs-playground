@@ -60,7 +60,7 @@ class Header extends Component {
         indicatorColor="secondary"
         textColor="secondary"
         className="tabs"
-        //scrollable // not work for  bug https://github.com/mui-org/material-ui/issues/12524
+        scrollable // not work for  bug https://github.com/mui-org/material-ui/issues/12524
       >
         {
           Object.keys(props.paths).map((key, index) => {
@@ -82,7 +82,9 @@ class Header extends Component {
     const props = this.props
     return (
       <header className="App-header">
-        <img src={Logo} className="App-logo" alt="logo" />
+        <Link to="/" className="logo-link">
+          <img src={Logo} className="App-logo" alt="logo" />
+        </Link>
         <div className="content">
           {this.renderLogout()}
           {this.renderTab(props)}

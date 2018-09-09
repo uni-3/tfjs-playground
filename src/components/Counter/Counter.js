@@ -4,7 +4,6 @@ import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 
 import NetworkD3 from '../NetworkD3/NetworkD3'
-import MnistTsne from '../MnistTsne/MnistTsne'
 
 export default class Counter extends Component {
 
@@ -29,7 +28,6 @@ export default class Counter extends Component {
             }}
           />
         </div>
-        <MnistTsne />
         <NetworkD3 />
       </div>
     )

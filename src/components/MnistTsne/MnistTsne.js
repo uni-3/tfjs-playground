@@ -159,10 +159,10 @@ export default class MnistTsne extends Component {
   }
   
   onStart(e) {
-    const numPoints = parseInt(500, 10)
+    const numPoints = parseInt(2000, 10)
     const tsneIter = parseInt(500, 10)
     const knnIter = parseInt(800, 10)
-    const perplexity = parseInt(40, 10)
+    const perplexity = parseInt(30, 10)
 
     this.start(numPoints, tsneIter, knnIter, perplexity)
   }

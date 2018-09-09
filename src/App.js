@@ -21,6 +21,7 @@ class App extends Component {
         andgate: '/andgate',
         polynomial: '/polynomial',
         mnistcnn: '/mnistcnn',
+        mnisttsne: '/mnisttsne',
     }
     this.initState = {
       paths: paths,

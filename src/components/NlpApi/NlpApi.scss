@@ -32,8 +32,8 @@
       .text {
         width: 100%;
       }
-
     }
+
   }
 
 
@@ -49,6 +49,14 @@
   .input-field, .result {
     margin-left: 2%;
     width: 46%;
+  }
+
+  .lda-tables {
+    .lda-table {
+      width: 31%;
+      display: inline-block;
+      margin: 0 1%;
+    }
   }
 
 }

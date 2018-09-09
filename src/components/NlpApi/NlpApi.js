@@ -29,7 +29,7 @@ export default class NlpApi extends Component {
     return d
   }
 
-  tableWithBarData() {
+  tableWithBarTextParseData() {
     let res = this.props.nlpApi.res
     if (res === null || res.tfidfs === undefined) {
       return null
@@ -44,6 +44,15 @@ export default class NlpApi extends Component {
     return d
   }
 
+  tableWithBarData(data) {
+    let header = ['word', 'score']
+    let d = [header]
+    Object.entries(data).forEach(([index, value]) => {
+      d.push([value[0], value[1]])
+    })
+
+    return d
+  }
 
 
   renderLoading(loading) {
@@ -82,12 +91,52 @@ export default class NlpApi extends Component {
     )
   }
 
+  renderLdaTableWithBar(obj) {
+    return (
+      obj.map((res) => {
+        let plotData = this.tableWithBarData(res.data)
+        return (
+          <div key={res.topic} className="lda-table">
+            <p>topic: {res.topic}</p>
+            <TableWithBar
+              data={plotData}
+            />
+          </div>
+        )
+ 
+      })
+    )
+  }
+
+  renderLdaResult() {
+    let res = this.props.nlpApi.res
+
+    // TODO resをobjectで受け取る
+    if (res === null || typeof(res) !== 'string') {
+      return
+    }
+    let resJson = JSON.parse(res)
+
+    if (resJson[0].topics === undefined) {
+      return
+    }
+
+    return ( resJson.map((obj) => {
+      return (
+        <div className="lda-tables">
+          {this.renderLdaTableWithBar(obj.word_freq)}
+        </div>
+      )
+    })
+    )
+
+  }
+
   render() {
-    console.log('nlp comp this', this)
+    //console.log('nlp comp this', this)
     const { nlpApi, onChange, postTextParse, postLexrank, postLda, loadSample } = this.props
     const { inputText, inputNgram, loading, res } = nlpApi
     let  postDisable = inputText.length === 0 ? 'disabled' : null
-    console.log('dis', postDisable)
 
     return (
       <div className="nlp-api">
@@ -161,8 +210,9 @@ export default class NlpApi extends Component {
           data={this.wordcloudData()}
         />
         <TableWithBar
-          data={this.tableWithBarData()}
+          data={this.tableWithBarTextParseData()}
         />
+        {this.renderLdaResult()}
       </div>
     )
   }

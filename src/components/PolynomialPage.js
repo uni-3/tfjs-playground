@@ -9,7 +9,8 @@ import { TextField, Button } from "@material-ui/core"
 import {generateData} from './Polynomial/data'
 
 import ScatterChart from './ScatterChart/ScatterChart'
-import LossChart from './LossChart/LossChart'
+//import LossChart from './LossChart/LossChart'
+import LineChart from './LineChart/LineChart'
 
 import './PolynomialPage.css';
 
@@ -219,6 +220,33 @@ class PolynomialPage extends Component {
       max: 5,
       min: -5
     }
+    let chartData = [
+      {
+        rows: lossArray,
+        hAxis: {
+          title: 'epoch',
+          minValue: 0,
+          maxValue: this.state.epochs
+        },
+        vAxis: {
+          title: 'loss',
+          minValue: 0,
+          maxValue: 0.1 
+        },
+        legend: 'left',
+        columns: [
+          {
+            type: 'number',
+            label: 'Epoch'
+          },
+          {
+            type: 'number',
+            label: 'Loss'
+          }
+        ],
+        title: 'Epoch vs. Loss'
+      }
+    ]
     return (
       <div className="Poly">
         <h2>Predict polynomial equation</h2>
@@ -240,7 +268,19 @@ class PolynomialPage extends Component {
           </Button>
         </div>
         <ScatterChart dataArray={dataArray} />
-        <LossChart lossArray={lossArray} epochs={this.state.epochs} />
+        { chartData.map(data => {
+          return (
+            <LineChart 
+              rows={data.rows}
+              hAxis={data.hAxis}
+              vAxis={data.vAxis}
+              legend={data.legend}
+              columns={data.columns}
+              title={data.title}
+              className="line-chart"
+            />
+          )
+        })}
       </div>
     );
     //<button id="resetButton" onClick={this.resetModel}>Reset</button>
