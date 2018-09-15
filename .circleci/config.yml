@@ -15,7 +15,7 @@ jobs:
           command: echo $ENV | base64 --decode > .env
       - run:
           name: set firebase cons
-          command: echo $FIREBASE_CONF | base64 --decode > ./src/firebse/config.js
+          command: echo $FIREBASE_CONF | base64 --decode > ./src/firebase/config.js
 
       - run:
           name: update-npm
