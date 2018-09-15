@@ -8,38 +8,27 @@ jobs:
     steps:
       - checkout
       - run:
-        name: update-npm
-        command: 'sudo npm instal -g npm'
+          name: update-npm
+          command: sudo npm instal -g npm
       - restore_cache:
-        key: dependency-cache-{{ checksum "package.json" }}
-
+          key: dependency-cache-{{ checksum "package.json" }}
       - run:
-        name: install-npm
-        command: npm install
+          name: install-npm
+          command: npm install
       - save_cache:
-        key: dependency-cache-{{ checksum "package.json" }}
-        paths:
-          - ./node_modules
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
       - run:
-        name: build-npm
-        command: npm run build
-  deploy:
-    docker:
-      - image: circleci/node:8.11
-    working_directory: ~/repo
-    #branch: master
-    #attach_workspace:
-    #  at: ~/repo 
-    steps:
-      - run:
-        name: deploy-firebase
-        command: firebase deploy --project "$FIREBASE_PJ" --token "$FIREBASE_TOKEN"
+          name: build-npm
+          command: npm run build
+      
+      - deploy:
+          name: deploy-firebase
+          command: firebase deploy --project "$FIREBASE_PJ" --token "$FIREBASE_TOKEN"
 
 workflows:
   vertion: 2
   build_and_deploy:
     jobs:
       - build
-      - deploy:
-        requires:
-          - build
