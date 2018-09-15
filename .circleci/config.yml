@@ -31,7 +31,9 @@ jobs:
     #attach_workspace:
     #  at: ~/repo 
     steps:
-      command: firebase deploy --project "$FIREBASE_PJ" --token "$FIREBASE_TOKEN"
+      - run:
+        name: deploy-firebase
+        command: firebase deploy --project "$FIREBASE_PJ" --token "$FIREBASE_TOKEN"
 
 workflows:
   vertion: 2
