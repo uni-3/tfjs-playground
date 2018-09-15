@@ -24,9 +24,12 @@ jobs:
         name: build-npm
         command: npm run build
   deploy:
+    docker:
+      - image: circleci/node:8.11
+    working_directory: ~/repo
     #branch: master
-    attach_workspace:
-      at: ~/repo 
+    #attach_workspace:
+    #  at: ~/repo 
     commands:
       - firebase deploy --project "$FIREBASE_PJ" --token "$FIREBASE_TOKEN"
 
