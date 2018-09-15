@@ -31,7 +31,7 @@ jobs:
             - ./node_modules
       - run:
           name: build-npm
-          command: npm run build
+          command: CI=false npm run build
       
       - deploy:
           name: deploy-firebase
