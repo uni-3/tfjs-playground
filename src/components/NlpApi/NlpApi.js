@@ -7,7 +7,6 @@ import Dropzone from 'react-dropzone'
 
 import Wordcloud from '../Wordcloud/Wordcloud'
 import TableWithBar from '../TableWithBar/TableWithBar'
-import CatText from "../../assets/wagahaiwa_nekodearu.txt"
 import './NlpApi.css'
 
 
