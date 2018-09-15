@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           name: update-npm
-          command: sudo npm instal -g npm
+          command: sudo npm install -g npm
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
@@ -28,7 +28,7 @@ jobs:
           command: firebase deploy --project "$FIREBASE_PJ" --token "$FIREBASE_TOKEN"
 
 workflows:
-  vertion: 2
+  version: 2
   build_and_deploy:
     jobs:
       - build
