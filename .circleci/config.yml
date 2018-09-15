@@ -30,8 +30,8 @@ jobs:
     #branch: master
     #attach_workspace:
     #  at: ~/repo 
-    commands:
-      - firebase deploy --project "$FIREBASE_PJ" --token "$FIREBASE_TOKEN"
+    steps:
+      command: firebase deploy --project "$FIREBASE_PJ" --token "$FIREBASE_TOKEN"
 
 workflows:
   vertion: 2
