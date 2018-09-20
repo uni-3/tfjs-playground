@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+
 import * as counterModule from '../modules/Counter'
 import Counter from '../components/Counter/Counter'
 
@@ -16,4 +17,5 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
+//export default connect(mapStateToProps, mapDispatchToProps)(Counter)
 export default connect(mapStateToProps, mapDispatchToProps)(Counter)

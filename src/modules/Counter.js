@@ -27,10 +27,10 @@ export default function counter(state=initialState, action) {
 }
 
 // action-creator
-export function increment() {
+export const increment = () => {
   return { type: INCREMENT }
 }
 
-export function decrement() {
+export const decrement = () => {
   return { type: DECREMENT }
 }

@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom"
 import Routes from './Routes'
 import Header from './Header'
 
-import "./App.css"
+//import "./App.css"
 
 import createBrowserHistory from 'history/createBrowserHistory'
 const history = createBrowserHistory()
@@ -15,6 +15,7 @@ class App extends Component {
     super(props)
     const paths = {
         home: '/',
+        audioapi: '/audioapi',
         bookapi: '/bookapi',
         nlpapi: '/nlpapi',
         imagenet: '/imagenet',

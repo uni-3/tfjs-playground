@@ -33,6 +33,7 @@ export default class MnistCnn extends Component {
   async componentDidMount() {
     const canvas = this.refs.canvas
     // action initModel
+    //this.props.initModel(canvas)
     this.props.initModel(canvas)
 
     // canvas for embedding
@@ -83,6 +84,8 @@ export default class MnistCnn extends Component {
     //console.log('loss: ', lastLoss)
     //console.log('acc: ', lastAcc)
     //const layer = mnistModel.model.getLayer('conv2d_Conv2D1_input')
+    const layer = mnistModel.model.getLayer('emb')
+    console.log('model layer', layer)
     return [lossValues, accValues]
   }
 

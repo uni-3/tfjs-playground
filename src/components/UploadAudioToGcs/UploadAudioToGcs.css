@@ -1,0 +1,10 @@
+:local .audio-to-text .dropzone {
+  width: 300px;
+  height: 200px;
+  box-sizing: border-box;
+  border-width: 2px;
+  border-color: #666666;
+  border-style: dashed;
+  border-radius: 5px;
+  vertical-align: top;
+  margin-right: 2%; }

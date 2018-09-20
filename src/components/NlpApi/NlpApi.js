@@ -30,7 +30,7 @@ export default class NlpApi extends Component {
 
   tableWithBarTextParseData() {
     let res = this.props.nlpApi.res
-    if (res === null || res.tfidfs === undefined) {
+    if (res === null || res === undefined || res.tfidfs === undefined) {
       return null
     }
 

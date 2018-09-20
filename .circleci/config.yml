@@ -8,9 +8,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: echo 
-          command: echo $ENV
-      - run:
           name: set env
           command: echo $ENV | base64 --decode > .env
       - run:

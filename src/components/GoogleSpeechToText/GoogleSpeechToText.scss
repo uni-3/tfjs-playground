@@ -1,0 +1,21 @@
+:local .speech-to-text {
+
+  h2 {
+    width: 100%;
+  }
+
+  .result {
+
+    .output-text {
+      width: 50%;
+      text-align: center;
+
+      > div {
+        box-sizing: border-box;
+        border: solid 1px #000000;
+      }
+    }
+
+  }
+
+}

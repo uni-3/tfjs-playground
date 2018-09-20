@@ -132,3 +132,37 @@ export const postLexrankApi = (text, params) => {
   })
 
 }
+
+export const postAudioApi = (dataUrl, params={}) => {
+  let url = process.env.REACT_APP_GOOGLE_API_URL
+  let path = '/gspeech'
+
+  let data = {
+    //audio: audio,
+    //url: state.targetFile.url
+    uri: dataUrl //gs url
+  }
+  let headers = {
+  }
+
+  let ax = axiosBase.create({
+    baseURL: url,
+    responseType: 'json',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+
+  return ax({
+    method: 'POST',
+    url: path,
+    data: data,
+    headers: headers,
+    params: params
+  }).then((res) => {
+    console.log('res axios', res)
+    return res.data.res
+  }).catch((err) => {
+    return err
+  })
+}
