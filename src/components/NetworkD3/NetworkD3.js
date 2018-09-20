@@ -26,7 +26,9 @@ export default class NetworkD3 extends Component {
     },
     link: {
       highlightColor: 'gray'
-    }
+    },
+    width: 500,
+    height: 500
   }
 
   // graph event callbacks
