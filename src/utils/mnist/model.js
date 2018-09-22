@@ -9,10 +9,11 @@ https://github.com/tensorflow/tfjs-examples/blob/master/mnist/index.js
 export class MnistModel {
   constructor(canvas) {
     this.model = tf.sequential()
-    this.learningRate = 0.20
-    this.batchSize = 65
+    this.learningRate = 0.15
+    //this.batchSize = 65
+    this.batchSize = 100
     // epoch
-    //this.trainBatch = 10
+    //this.trainBatch = 100
     this.trainBatch = 500
     this.testBatch = 100
     this.testIterFreq = 5
@@ -29,20 +30,7 @@ export class MnistModel {
     this.model.add(tf.layers.conv2d({
       inputShape: [IMAGE_WIDTH, IMAGE_HEIGHT, 1],
       kernelSize: 5,
-      filters: 8,
-      strides: 1,
-      activation: 'relu',
-      kernelInitializer: 'varianceScaling'
-    }))
-
-    this.model.add(tf.layers.maxPooling2d({
-      poolSize: [2, 2],
-      strides: [2, 2]
-    }))
-
-    this.model.add(tf.layers.conv2d({
-      //inputShape: [IMAGE_WIDTH, IMAGE_HEIGHT, 1],
-      kernelSize: 5,
+      //filters: 4,
       filters: 16,
       strides: 1,
       activation: 'relu',
@@ -54,22 +42,27 @@ export class MnistModel {
       strides: [2, 2]
     }))
 
+    this.model.add(tf.layers.dropout({
+      rate: 0.2
+    }))
+
+    this.model.add(tf.layers.conv2d({
+      kernelSize: 5,
+      //filters: 8,
+      filters: 8,
+      strides: 1,
+      activation: 'relu',
+      kernelInitializer: 'varianceScaling'
+    }))
+
+    this.model.add(tf.layers.maxPooling2d({
+      poolSize: [2, 2],
+      strides: [2, 2]
+    }))
+
+
 
     this.model.add(tf.layers.flatten())
-
-    this.model.add(tf.layers.dense({
-      units: 32,
-      kernelInitializer: 'varianceScaling',
-      activation: 'relu'
-    }))
-
-    /*
-    this.model.add(tf.layers.dense({
-      units: 16,
-      kernelInitializer: 'varianceScaling',
-      activation: 'relu'
-    }))
-    */
 
 
     this.model.add(tf.layers.dense({
@@ -81,6 +74,20 @@ export class MnistModel {
     /*
     */
 
+
+    this.model.add(tf.layers.dense({
+      units: 32,
+      kernelInitializer: 'varianceScaling',
+      activation: 'relu'
+    }))
+
+
+    this.model.add(tf.layers.dense({
+      units: 32,
+      kernelInitializer: 'varianceScaling',
+      activation: 'relu'
+    }))
+
     this.model.add(tf.layers.dense({
       units: 10,
       kernelInitializer: 'varianceScaling',
@@ -88,7 +95,6 @@ export class MnistModel {
     }))
 
     const optimizer = tf.train.sgd(this.learningRate)
-//    const optimizer = tf.train.adam()
 
     this.model.compile({
       optimizer: optimizer,

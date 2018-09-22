@@ -5,21 +5,15 @@
   top: 0px;
   left: 0px;
   z-index: 1;
-  background-color: rgba(255, 255, 255, 0.8);
-}
-
-:local .loading .progress, :local .loading h3 {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  text-align: center;
-  z-index: 2;
-}
-
-:local .loading h3 {
-  margin: 70px 0  0 -15px;
-}
+  background-color: rgba(255, 255, 255, 0.8); }
+  :local .loading .progress, :local .loading h3 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    z-index: 2; }
+  :local .loading h3 {
+    margin: 70px 0  0 -15px; }
 
 :local .disable {
-  display: none;
-}
+  display: none; }
