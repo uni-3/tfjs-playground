@@ -60,7 +60,8 @@ export default class GoogleSpeechToText extends Component {
 
   render () {
     console.log('googlespeech state', this)
-    let { loading } = this.props.googleSpeechToText
+    let { loading, dataUrl } = this.props.googleSpeechToText
+    let disable = dataUrl === '' ? true : false
     // postボタンと結果を表示する部分が必要
     const { postAudioApi } = this.props
     return (
@@ -71,6 +72,7 @@ export default class GoogleSpeechToText extends Component {
         <h2>Speech To Text(google API)</h2>
         <Button 
           onClick={postAudioApi} 
+          disabled={disable}
           variant="outlined"
           color="primary"
           className={styles.button}

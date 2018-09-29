@@ -17,6 +17,7 @@ export default class UploadAudioToGcs extends Component {
     let { files, duration, dataUrl, loading } = this.props.uploadAudioToGcs
 
     let fileUrl = files.length === 0 ? '' : files[0].preview
+    let disable = files.length === 0 ? true : false
     return (
       <div className={styles['audio-to-text']}>
         <Loading
@@ -39,6 +40,7 @@ export default class UploadAudioToGcs extends Component {
           </ul>
           <Button
             onClick={onUpload}
+            disabled={disable}
             variant="outlined" color="primary"
           >upload</Button>
         </div>

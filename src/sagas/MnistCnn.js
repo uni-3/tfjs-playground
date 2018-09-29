@@ -18,7 +18,6 @@ function* loadModel(action) {
   let mnistModel = new MnistModel(action.payload.canvas)
   console.log('mnistload', mnistModel)
   mnistModel.initModel()
-  //mnistModel.initModel_def()
   console.log('mnist init', mnistModel)
   yield put({type: MODEL_LOADED, payload: { mnistModel: mnistModel } })
 }

@@ -37,13 +37,13 @@ export class MnistModel {
       kernelInitializer: 'varianceScaling'
     }))
 
+    this.model.add(tf.layers.dropout({
+      rate: 0.3
+    }))
+
     this.model.add(tf.layers.maxPooling2d({
       poolSize: [2, 2],
       strides: [2, 2]
-    }))
-
-    this.model.add(tf.layers.dropout({
-      rate: 0.2
     }))
 
     this.model.add(tf.layers.conv2d({
@@ -76,7 +76,7 @@ export class MnistModel {
 
 
     this.model.add(tf.layers.dense({
-      units: 32,
+      units: 64,
       kernelInitializer: 'varianceScaling',
       activation: 'relu'
     }))
@@ -103,106 +103,6 @@ export class MnistModel {
     })
   }
 
-
-  // init 2
-  initModel_def() {
-    console.log('init model 2')
-    this.model.add(tf.layers.conv2d({
-      inputShape: [IMAGE_WIDTH, IMAGE_HEIGHT, 1],
-      kernelSize: 5,
-      filters: 8,
-      strides: 1,
-      //activation: 'relu',
-      kernelInitializer: 'varianceScaling'
-    }))
-
-    this.model.add(tf.layers.maxPooling2d({
-      poolSize: [2, 2],
-      strides: [2, 2]
-    }))
-    this.model.add(tf.layers.batchNormalization({axis: 1}))
-
-    this.model.add(tf.layers.activation('relu'))
-
-    // worning
-    this.model.add(tf.layers.conv2d({
-      //inputShape: [IMAGE_WIDTH, IMAGE_HEIGHT, 1],
-      kernelSize: 2,
-      filters: 16,
-      strides: 1,
-      //activation: 'relu',
-      kernelInitializer: 'varianceScaling'
-    }))
-    console.log('init model 2')
-
-    this.model.add(tf.layers.maxPooling2d({
-      poolSize: [2, 2],
-      strides: [2, 2]
-    }))
-    this.model.add(tf.layers.batchNormalization({axis: 1}))
-
-    this.model.add(tf.layers.activation('relu'))
-
-    this.model.add(tf.layers.conv2d({
-      //inputShape: [IMAGE_WIDTH, IMAGE_HEIGHT, 1],
-      kernelSize: 2,
-      filters: 8,
-      strides: 1,
-      //activation: 'relu',
-      kernelInitializer: 'varianceScaling'
-    }))
-    this.model.add(tf.layers.conv2d({
-      //inputShape: [IMAGE_WIDTH, IMAGE_HEIGHT, 1],
-      kernelSize: 2,
-      filters: 32,
-      strides: 1,
-      //activation: 'relu',
-      kernelInitializer: 'varianceScaling'
-    }))
-
-    this.model.add(tf.layers.batchNormalization({axis: 1}))
-
-    this.model.add(tf.layers.activation('relu'))
-
-    this.model.add(tf.layers.flatten())
-
-    this.model.add(tf.layers.dense({
-      units: 32,
-      kernelInitializer: 'varianceScaling',
-      activation: 'relu'
-    }))
-
-    this.model.add(tf.layers.dense({
-      //name: 'emb',
-      units: 2,
-      kernelInitializer: 'varianceScaling',
-    //  activation: 'tanh'
-    }))
-
-    this.model.add(tf.layers.batchNormalization({axis: 1}))
-
-
-    this.model.add(tf.layers.activation({name: 'emb', activation: 'tanh'}))
-
-
-    /*
-    */
-
-    this.model.add(tf.layers.dense({
-      units: 10,
-      kernelInitializer: 'varianceScaling',
-      activation: 'softmax'
-    }))
-
-    const optimizer = tf.train.sgd(this.learningRate)
-//    const optimizer = tf.train.adam()
-
-    this.model.compile({
-      optimizer: optimizer,
-      loss: 'categoricalCrossentropy',
-      metrics: ['accuracy'],
-    })
-  }
 
   async trainFrame(index) {
       const [batch, validationData] = tf.tidy(() => {
