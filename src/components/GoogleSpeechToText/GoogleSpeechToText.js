@@ -18,7 +18,7 @@ export default class GoogleSpeechToText extends Component {
   }
 
   componentDidUpdate() {
-    console.log('google speech updatethis', this)
+    //console.log('google speech updatethis', this)
   }
 
   renderResult() {
@@ -26,6 +26,14 @@ export default class GoogleSpeechToText extends Component {
     console.log('res', res)
     if (res === null) {
       return
+    }
+
+    if (!Array.isArray(res)) {
+      return (
+        <div>
+          error: {res.details}
+        </div>
+      )
     }
 
     // resからtextをつなげてtextfieldに表示
@@ -60,8 +68,8 @@ export default class GoogleSpeechToText extends Component {
 
   render () {
     console.log('googlespeech state', this)
-    let { loading, dataUrl } = this.props.googleSpeechToText
-    let disable = dataUrl === '' ? true : false
+    let { loading, gcsPath } = this.props.googleSpeechToText
+
     // postボタンと結果を表示する部分が必要
     const { postAudioApi } = this.props
     return (
@@ -72,7 +80,6 @@ export default class GoogleSpeechToText extends Component {
         <h2>Speech To Text(google API)</h2>
         <Button 
           onClick={postAudioApi} 
-          disabled={disable}
           variant="outlined"
           color="primary"
           className={styles.button}

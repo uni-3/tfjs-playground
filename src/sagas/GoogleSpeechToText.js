@@ -4,9 +4,6 @@ import { postAudioApi } from './api'
 import { POST_AUDIO_API, FETCH_SUCCEEDED, FETCH_FAILED } from '../modules/GoogleSpeechToText'
 
 
-// 以下を改修
-
-
 // selector 
 const selectGcsPath = (state) => {
   //console.log('saga select ', state)
@@ -21,7 +18,8 @@ function* fetchAudioApiResult(action) {
     console.log('g select sage', gcsPath)
     const res = yield call(postAudioApi, gcsPath)
     console.log('g fetch sage', res)
-    yield put({type: FETCH_SUCCEEDED, payload: {res: res} })
+    // add gcsPath for set disable flag
+    yield put({type: FETCH_SUCCEEDED, payload: {res: res, gcsPath: gcsPath} })
   } catch (e) {
     yield put({type: FETCH_FAILED, message: e.message})
   }

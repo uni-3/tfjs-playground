@@ -26,7 +26,7 @@ export default class UploadAudioToGcs extends Component {
         <h2>Upload audio file to GCS</h2>
         <div className="upload-file">
           <Dropzone 
-            //accept="audio/flac" // accept only flac
+            accept="audio/flac" // accept only flac
             className={styles.dropzone}
             onDrop={onDrop}
           >

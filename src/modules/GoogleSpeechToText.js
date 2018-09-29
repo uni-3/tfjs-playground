@@ -10,7 +10,7 @@ export const FETCH_FAILED = 'FETCH_FAILED'
 
 const initialState = {
   loading: false,
-  dataUrl: '',
+  gcsPath: '',
   res: null
 }
 
