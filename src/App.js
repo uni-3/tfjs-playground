@@ -15,7 +15,7 @@ class App extends Component {
     super(props)
     const paths = {
         home: '/',
-        audioapi: '/audioapi',
+        //audioapi: '/audioapi',
         bookapi: '/bookapi',
         nlpapi: '/nlpapi',
         imagenet: '/imagenet',

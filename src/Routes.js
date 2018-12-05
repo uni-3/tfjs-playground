@@ -17,16 +17,22 @@ import MnistTsne from "./components/MnistTsne/MnistTsne"
 
 import Auth from "./components/Auth"
 
-
 //import { firebaseApp } from './firebase'
+
+const NoMatch = ({ location }) => (
+  <div>
+    <h3>sorry, No match for <code>{location.pathname}</code></h3>
+  </div>
+)
+
 
 export default class Routes extends Component {
   render() {
         //<Redirect from="/" to="/login" />
     return (
       <Switch>
-        <Route exact path="/login" component={Login} />
-        <Auth>
+        { /* <Route exact path="/login" component={Login} /> */}
+        { /* <Auth> */}
           <Switch>
             <Route exact path="/" component={Counter} />
             <Route exact path="/audioapi" component={SpeechToText} />
@@ -37,8 +43,9 @@ export default class Routes extends Component {
             <Route exact path="/polynomial" component={PolynomialPage} />
             <Route exact path="/mnistcnn" component={MnistCnn} />
             <Route exact path="/mnisttsne" component={MnistTsne} />
+            <Route component={NoMatch} />
           </Switch>
-        </Auth>
+        { /* </Auth> */}
       </Switch>
     )
   }

@@ -25,7 +25,6 @@ class Header extends Component {
   }
 
   onLogout(e) {
-    console.log('on logout', this)
     localStorage.removeItem(appTokenKey)
     firebase.auth().signOut()
 
@@ -50,9 +49,11 @@ class Header extends Component {
   }
 
   renderTab(props) {
+    /*
     if(!this.isLogin()) {
       return
     }
+    */
     return (
       <Tabs
         value={props.tabValue} 
@@ -86,7 +87,7 @@ class Header extends Component {
           <img src={Logo} className="App-logo" alt="logo" />
         </Link>
         <div className="content">
-          {this.renderLogout()}
+          { /* this.renderLogout() */}
           {this.renderTab(props)}
         </div>
       </header>
