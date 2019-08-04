@@ -32,7 +32,8 @@ jobs:
       
       - deploy:
           name: deploy-firebase
-          command: npx firebase deploy --project "$FIREBASE_PJ" --token "$FIREBASE_TOKEN"
+          #command: npx firebase deploy --project "$FIREBASE_PJ" --token "$FIREBASE_TOKEN"
+          command: npx firebase use "$FIREBASE_PJ" --token "$FIREBASE_TOKEN" && npx firebase deploy --token "$FIREBASE_TOKEN"
 
 workflows:
   version: 2
