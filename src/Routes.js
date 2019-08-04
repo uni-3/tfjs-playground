@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 import Counter from "./containers/Counter"
+import Wikiart from "./containers/Wikiart"
 import LibraryApi from "./containers/LibraryApi"
 import NlpApi from "./containers/NlpApi"
 import Login from "./containers/Login"
@@ -38,6 +39,7 @@ export default class Routes extends Component {
             <Route exact path="/audioapi" component={SpeechToText} />
             <Route exact path="/bookapi" component={LibraryApi} />
             <Route exact path="/nlpapi" component={NlpApi} />
+            <Route exact path="/wikiart" component={Wikiart} />
             <Route exact path="/imagenet" component={ImageNetPage} />
             <Route exact path="/andgate" component={AndGatePage} />
             <Route exact path="/polynomial" component={PolynomialPage} />

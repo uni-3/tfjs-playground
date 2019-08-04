@@ -1,12 +1,13 @@
 import React, { Component } from "react"
-import { BrowserRouter as Router } from "react-router-dom"
+//import { BrowserRouter as Router } from "react-router-dom"
+import { Router } from "react-router-dom"
 
 import Routes from './Routes'
 import Header from './Header'
 
 //import "./App.css"
 
-import createBrowserHistory from 'history/createBrowserHistory'
+import { createBrowserHistory } from 'history'
 const history = createBrowserHistory()
 
 
@@ -17,6 +18,7 @@ class App extends Component {
         home: '/',
         //audioapi: '/audioapi',
         bookapi: '/bookapi',
+        wikiart: '/wikiart',
         nlpapi: '/nlpapi',
         imagenet: '/imagenet',
         andgate: '/andgate',

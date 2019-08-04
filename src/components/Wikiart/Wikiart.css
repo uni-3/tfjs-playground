@@ -1,0 +1,8 @@
+.wikiart .artimg {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  border-width: 1px;
+  border-color: #666666;
+  vertical-align: top;
+  margin-right: 2%; }
