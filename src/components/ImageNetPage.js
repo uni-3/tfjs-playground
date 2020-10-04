@@ -23,33 +23,45 @@ export default class ImageNetPage extends Component {
   }
 
   async componentDidMount() {
-    this.model = await mobilenet.load()
+    const version = 2;
+    const alpha = 0.5;
+
+    this.model = await mobilenet.load({
+      version, alpha
+    })
 
     this.setState({
       modelLoading: false
     })
   }
 
-  onClick(e) {
-    console.log('onclick', e.target)
+  async onClick(e) {
+    //console.log('onclick', e.target)
     let img = e.target
+    const topk = 5
 
+    const preds = await this.model.classify(img, topk)
+    this.setState({
+      preds: preds
+    })
+    /*
     this.model.classify(img, 5).then(preds => {
-      console.log('preds: ')
-      console.log(preds)
+      //console.log('preds: ')
+      //console.log(preds)
 
       this.setState({
         preds: preds
       })
     })
+    */
   }
 
   onDrop(files) {
     this.setState({
       files: files
     })
-    console.log('file', files[0])
-    console.log('file', files[0].preview)
+    //console.log('file', files[0])
+    //console.log('file', files[0].preview)
   }
 
   renderHeader() {
@@ -98,9 +110,9 @@ export default class ImageNetPage extends Component {
   render() {
     let disable = this.state.modelLoading ? 'disable' : ''
     //let fileUrl = this.state.files === [] ? '' : URL.createObjectURL(this.state.files[0])
-    console.log('this', this.state)
+    //console.log('this', this.state)
     let fileUrl = this.state.files.length === 0 ? '' : this.state.files[0].preview
-    
+
 
     return (
       <div className="imagenet">
@@ -116,7 +128,7 @@ export default class ImageNetPage extends Component {
           <Dropzone className="dropzone" onDrop={this.onDrop.bind(this)}>
             <p>Dropping some file here, or click to select file to upload.</p>
           </Dropzone>
-          <img src={fileUrl} className="uploadimg" onClick={this.onClick.bind(this)}/>
+          <img alt="" src={fileUrl} className="uploadimg" onClick={this.onClick.bind(this)}/>
         </div>
         { this.renderPredsTable(this.state.preds) }
       </div>

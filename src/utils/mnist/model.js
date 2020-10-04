@@ -21,9 +21,10 @@ export class MnistModel {
     this.load(canvas) // load mnist data to this.data
   }
 
-  async load(canvas) {
+  //async load(canvas) {
+  load = async (canvas) => {
     this.data = new MnistData(canvas)
-    await this.data.load()
+    return await this.data.load()
   }
 
   initModel() {
@@ -141,7 +142,7 @@ export class MnistModel {
       //if (validationData != null) {
       let accValue = {'batch': index, 'accuracy': accuracy, 'set': 'train'}
       //}
-  
+
       //if (validationData != null) {
       //  accValues.push({'batch': index, 'accuracy': accuracy, 'set': 'train'})
       //}

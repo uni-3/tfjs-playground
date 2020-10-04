@@ -16,7 +16,7 @@
  */
 
 import * as tf from '@tensorflow/tfjs'
-import * as tsne from '@tensorflow/tfjs-tsne'
+//import * as tsne from '@tensorflow/tfjs-tsne'
 
 
 /*
@@ -26,7 +26,7 @@ import * as tsne from '@tensorflow/tfjs-tsne'
 */
 export const IMAGE_HEIGHT = 28
 export const IMAGE_WIDTH = 28
-export const IMAGE_SIZE = IMAGE_WIDTH * IMAGE_HEIGHT 
+export const IMAGE_SIZE = IMAGE_WIDTH * IMAGE_HEIGHT
 export const CLASSES = 10
 export const DATASET_ELEMENTS = 65000
 export const TRAIN_ELEMENTS = 550
@@ -67,7 +67,7 @@ export class MnistData {
         const datasetBytesBuffer = new ArrayBuffer(DATASET_ELEMENTS * IMAGE_SIZE * 4)
 
         this.canvas.width = this.image.width
-        this.canvas.height = chunkSize 
+        this.canvas.height = chunkSize
 
         // batch size
         for (let i = 0; i < DATASET_ELEMENTS / chunkSize; i++) {

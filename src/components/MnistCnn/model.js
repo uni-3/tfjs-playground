@@ -1,6 +1,7 @@
 import * as tf from '@tensorflow/tfjs'
 
-import { MnistData, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_SIZE, CLASSES, TEST_ELEMENTS } from '../MnistTsne/data'
+//import { MnistData, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_SIZE, CLASSES, TEST_ELEMENTS } from '../MnistTsne/data'
+import { MnistData, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_SIZE, CLASSES, TEST_ELEMENTS } from '../../utils/mnist/data'
 import { valueAndGrad } from '@tensorflow/tfjs-core';
 
 /*
@@ -102,7 +103,7 @@ export class MnistModel {
       // Plot loss / accuracy.
       // リアルタイムっぽく描きたい。。。
       lossValues.push({'batch': i, 'loss': loss, 'set': 'train'})
-  
+
       if (validationData != null) {
         accValues.push({'batch': i, 'accuracy': accuracy, 'set': 'train'})
       }

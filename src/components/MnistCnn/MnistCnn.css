@@ -1,38 +1,38 @@
-:local .mnistcnn .train-results .train-charts {
+.mnistcnn .train-results .train-charts {
   width: 48%;
   margin: 1%;
   display: inline-block; }
 
-:local .mnistcnn .train-results .line-chart {
+.mnistcnn .train-results .line-chart {
   width: 100%;
   height: 300px;
   /*
       display: inline-block;
       */ }
 
-:local .mnistcnn .embedding canvas {
+.mnistcnn .embedding canvas {
   border: 1px black; }
 
-:local .mnistcnn .displaynone {
+.mnistcnn .displaynone {
   display: none; }
 
-:local .mnistcnn .predicts .results {
+.mnistcnn .predicts .results {
   display: flex;
   flex-wrap: wrap; }
 
-:local .mnistcnn .predicts .predict-image {
+.mnistcnn .predicts .predict-image {
   display: flex;
   flex-direction: column;
   margin-left: 1%;
   margin-bottom: 1%; }
-  :local .mnistcnn .predicts .predict-image .pred-incorrect {
+  .mnistcnn .predicts .predict-image .pred-incorrect {
     background-color: red;
     color: white; }
-  :local .mnistcnn .predicts .predict-image .pred-correct {
+  .mnistcnn .predicts .predict-image .pred-correct {
     background-color: green;
     color: white; }
-  :local .mnistcnn .predicts .predict-image .pred-canvas {
+  .mnistcnn .predicts .predict-image .pred-canvas {
     width: 100px; }
 
-:local .mnistcnn .mnistdata {
+.mnistcnn .mnistdata {
   display: none; }

@@ -14,7 +14,7 @@ import ImageNetPage from "./components/ImageNetPage"
 import AndGatePage from "./components/AndGatePage"
 import PolynomialPage from "./components/PolynomialPage"
 
-import MnistTsne from "./components/MnistTsne/MnistTsne"
+//import MnistTsne from "./components/MnistTsne/MnistTsne"
 
 import Auth from "./components/Auth"
 
@@ -44,7 +44,6 @@ export default class Routes extends Component {
             <Route exact path="/andgate" component={AndGatePage} />
             <Route exact path="/polynomial" component={PolynomialPage} />
             <Route exact path="/mnistcnn" component={MnistCnn} />
-            <Route exact path="/mnisttsne" component={MnistTsne} />
             <Route component={NoMatch} />
           </Switch>
         { /* </Auth> */}
@@ -52,3 +51,4 @@ export default class Routes extends Component {
     )
   }
 }
+//<Route exact path="/mnisttsne" component={MnistTsne} />

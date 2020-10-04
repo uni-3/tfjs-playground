@@ -8,7 +8,8 @@ import LineChart from '../LineChart/LineChart'
 import { MnistData, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_SIZE, CLASSES, TEST_ELEMENTS } from '../MnistTsne/data'
 //import { MnistModel } from './model'
 
-import styles from './MnistCnn.css'
+//import styles from './MnistCnn.css'
+import './MnistCnn.css'
 
 
 export default class MnistCnn extends Component {
@@ -89,7 +90,7 @@ export default class MnistCnn extends Component {
     return [lossValues, accValues]
   }
 
-  async onTrain(e) { 
+  async onTrain(e) {
     let [lossValues, accValues] = await this.trainData()
     this.setState({
       width: 500,
@@ -98,7 +99,7 @@ export default class MnistCnn extends Component {
   }
 
 
-  async onTest(e) { 
+  async onTest(e) {
     console.log('on test')
     let { mnistModel } = this.props.mnistCnn
     let predNum = 20
@@ -161,7 +162,7 @@ export default class MnistCnn extends Component {
       context.fillText(labels[i], x(dataX), y(dataY))
     })
   }
- 
+
 
   extGoogleChartData() {
     if (this.state.lossValues.length === 0) {
@@ -175,7 +176,7 @@ export default class MnistCnn extends Component {
     let lossData = lossValues.map((lossValue, index) => {
       return [index, lossValue.loss]
     })
-    
+
 
     let accData = accValues.map((accValue, index) => {
         return [index, accValue.accuracy]
@@ -189,7 +190,7 @@ export default class MnistCnn extends Component {
     return (
       chartDatas.map(data => {
         return (
-          <div className={styles['train-charts']}>
+          <div className="train-charts">
             epoch {data.rows.length}: {data.lastData}
             <LineChart
               rows={data.rows}
@@ -198,7 +199,7 @@ export default class MnistCnn extends Component {
               legend={data.legend}
               columns={data.columns}
               title={data.title}
-              className={styles['line-chart']}
+              className="line-chart"
             />
           </div>
         )
@@ -227,7 +228,7 @@ export default class MnistCnn extends Component {
         vAxis: {
           title: 'loss',
           minValue: 0,
-          maxValue: 0.1 
+          maxValue: 0.1
         },
         //legend: 'left',
         columns: [
@@ -274,7 +275,7 @@ export default class MnistCnn extends Component {
     ]
 
     return (
-      <div className={styles['train-results']}>
+      <div className="train-results">
         {this.renderLineCharts(accChartData)}
         {this.renderLineCharts(lossChartData)}
         {this.renderEmbedding()}
@@ -298,28 +299,28 @@ export default class MnistCnn extends Component {
       const label = labels[index]
 
       //let correct = 'pred-incorrect'
-      let correct = styles['pred-incorrect']
+      let correct = "pred-incorrect"
       if (pred === label) {
-        correct = styles['pred-correct']
+        correct = "pred-correct"
         totalCorrect += 1
-      } 
+      }
 
       return (
-        <div key={index} className={styles['predict-image']}>
+        <div key={index} className="predict-image">
           <div className={correct}>
             predicton: {pred}
           </div>
-          <canvas className={styles['pred-canvas']} ref={(e) => {this.drawImage(image.flatten(), e)}} />
+          <canvas className="pred-canvas" ref={(e) => {this.drawImage(image.flatten(), e)}} />
         </div>
       )
     })
 
     return (
-      <div class={styles.predicts}>
+      <div class="predicts">
         <h4>
             predictions(correct: {totalCorrect} / {predictions.length})
         </h4>
-        <div className={styles.results}>
+        <div className="results">
           {resultCanvases}
         </div>
       </div>
@@ -336,9 +337,10 @@ export default class MnistCnn extends Component {
     //}
 
     let lvs = this.state.lossValues.length
-    let embStyle = lvs === 0 ? `${styles.embedding} ${styles.displaynone}` : `${styles.embedding}`
+    //let embStyle = lvs === 0 ? `${styles.embedding} ${styles.displaynone}` : `${styles.embedding}`
+    let embStyle = lvs === 0 ? "embedding displaynone" : "embedding"
     return (
-      <div className={styles.mnistcnn}>
+      <div className="mnistcnn">
         <h3>train</h3>
         <div>
           <Button
@@ -364,7 +366,7 @@ export default class MnistCnn extends Component {
 
         <canvas
           ref="canvas"
-          className={styles.mnistdata}
+          className="mnistdata"
         ></canvas>
       </div>
 
