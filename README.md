@@ -29,7 +29,7 @@ npm run server
 
 ## setup
 
-setup credentials
+need to setup credentials
 
 `.env`
 `./src/firebase/config.json`
