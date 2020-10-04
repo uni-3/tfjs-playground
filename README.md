@@ -34,7 +34,7 @@ need to setup credentials
 `.env`
 `./src/firebase/config.json`
 
-refer sample file.
+refer sample files.
 
 
 ### references
