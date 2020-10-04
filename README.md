@@ -3,7 +3,9 @@
 ## npm commands
 
 - build
+
 build for production under `./build`.
+
 ```bash
 npm run build
 ```
@@ -35,7 +37,7 @@ setup credentials
 refer sample file.
 
 
-### reference
+### references
 - https://js.tensorflow.org/api/latest/#class:Tensor
 
 #### `/andgate`
