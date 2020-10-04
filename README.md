@@ -36,7 +36,6 @@ need to setup credentials
 
 refer sample files.
 
-
 ### references
 - https://js.tensorflow.org/api/latest/#class:Tensor
 
